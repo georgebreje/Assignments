@@ -29,13 +29,15 @@ namespace Conversion
                 Console.Write(parteIntreagaBinar.Peek());
                 parteIntreagaBinar.Pop();
             }
-            //Console.WriteLine($"{parteFractionara}");
-            while(parteFractionara>0)
+            /*
+            // aflu numarul de zecimale ca sa vad daca e posibila crearea unui numar binar
+            while(parteFractionara!=0)
             {
-                parteIntreaga = parteIntreaga * 10; // nu imi afiseaza nimic
-                numarZecimale = numarZecimale + 1;
+                    parteFractionara = parteFractionara * 10 - (int)(parteFractionara*10); // in loc de 3.75 sa fiseze 0.75 ca sa opresc while-ul la 0
+                    numarZecimale = numarZecimale + 1;
             }
-            Console.WriteLine(numarZecimale);
+            Console.WriteLine($"{parteFractionara}");*/
+            //am abordat gresit problema
 
             }
         }
