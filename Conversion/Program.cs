@@ -16,6 +16,7 @@ namespace Conversion
             double parteFractionara = n - (int)n;
             int rest;
             int numarBinar;
+            int numarZecimale=0;
             Stack parteIntreagaBinar = new Stack(); // stiva pentru afisare in ordine a valorii binare
             while (parteIntreaga!=0)
             {
@@ -28,14 +29,14 @@ namespace Conversion
                 Console.Write(parteIntreagaBinar.Peek());
                 parteIntreagaBinar.Pop();
             }
-            int[] frecventa; // verific daca cifra zecimala apare de mai mult de 2 ori cu ajutorul acestui vector
-            Console.Write(".");
-            while((double)(parteFractionara*2)!=1)
+            //Console.WriteLine($"{parteFractionara}");
+            while(parteFractionara>0)
             {
-                parteFractionara = parteFractionara*10;
-                int copie = (int)(parteFractionara * 2);
-                Console.Write($"{copie}");
+                parteIntreaga = parteIntreaga * 10; // nu imi afiseaza nimic
+                numarZecimale = numarZecimale + 1;
+            }
+            Console.WriteLine(numarZecimale);
+
             }
         }
     }
-}
