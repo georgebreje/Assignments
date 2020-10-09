@@ -12,6 +12,7 @@ namespace Moore
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Introduceti n:");
             int n = int.Parse(Console.ReadLine());
             int rezultatul = (int)(Math.Log(n,2)*18);
             int ani = rezultatul / 12;
