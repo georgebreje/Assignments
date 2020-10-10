@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace Conversion
 {
@@ -17,6 +18,8 @@ namespace Conversion
             int rest;
             int numarBinar;
             int numarZecimale=0;
+            double produs = 0;
+            double[] vectorVerificare= { };
             Stack parteIntreagaBinar = new Stack(); // stiva pentru afisare in ordine a valorii binare
             while (parteIntreaga!=0)
             {
@@ -29,16 +32,16 @@ namespace Conversion
                 Console.Write(parteIntreagaBinar.Peek());
                 parteIntreagaBinar.Pop();
             }
-            /*
-            // aflu numarul de zecimale ca sa vad daca e posibila crearea unui numar binar
-            while(parteFractionara!=0)
+            int i = 1;
+            bool ok = true;
+            while (produs != 1 && ok == true)
             {
-                    parteFractionara = parteFractionara * 10 - (int)(parteFractionara*10); // in loc de 3.75 sa fiseze 0.75 ca sa opresc while-ul la 0
-                    numarZecimale = numarZecimale + 1;
+                // mi-am laut un vector sa verific daca a mai aparut vreodata rezultatul inainte ca sa ies din while
+                produs = parteFractionara * 2;
+                vectorVerificare[i] = produs ;
+                Console.Write($"{(int)produs}"); // afisare 0 / 1
+                parteFractionara = produs - (int)produs;
             }
-            Console.WriteLine($"{parteFractionara}");*/
-            //am abordat gresit problema
-
             }
         }
     }
