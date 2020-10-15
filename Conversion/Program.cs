@@ -12,63 +12,74 @@ namespace Conversion
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Introduceti baza din care vreti sa convertiti");
+            int bazaInitiala = int.Parse(Console.ReadLine());
+            Console.WriteLine("Introduceti baza in care vreti sa convertiti");
+            int bazaTinta = int.Parse(Console.ReadLine());
+            Console.WriteLine("Introduceti numarul pe care vreti sa il convertiti");
             double n = double.Parse(Console.ReadLine());
             int parteIntreaga = (int)n;
             double parteFractionara = n - (int)n;
             int rest;
             double produs = 0;
-            double parteFractionaraInitiala = n-(int)n;
-            Stack parteIntreagaBinar = new Stack(); // stiva pentru afisare in ordine a valorii binare
-            Queue parteFractionaraBinar = new Queue();
-            while (parteIntreaga != 0)
+            double parteFractionaraInitiala = n - (int)n;
+            Stack parteIntreagaConv = new Stack(); // stiva pentru afisare in ordine a valorii binare
+            Queue parteFractionaraConv = new Queue();
+            if (bazaInitiala == 10) 
             {
-                rest = parteIntreaga - (2 * (int)(parteIntreaga / 2)); //pe baza faptului ca se imparte doar la 2 am gasist formula n-2*(n/2) = restul
-                parteIntreagaBinar.Push(rest);
-                parteIntreaga = (int)(parteIntreaga / 2);
-            }
-            while (parteIntreagaBinar.Count != 0)
-            {
-                Console.Write(parteIntreagaBinar.Peek());   
-                parteIntreagaBinar.Pop();
-            }
-            Console.Write("."); // despartirea partii intregi de cea fractionara
-            int i = 1;
-            bool ok = true;
-
-
-            while (produs != 1 && ok == true)
-            {
-                produs = parteFractionara * 2;
-                //Console.Write($"{(int)produs}"); // afisare 0 / 1
-                parteFractionaraBinar.Enqueue((int)produs);
-                parteFractionara = produs - (int)produs;
-                if (parteFractionara - 0.0000000001 < parteFractionaraInitiala
-&& parteFractionara + 0.0000000001 > parteFractionaraInitiala)
+                if (bazaTinta == 2)
                 {
-                    ok = false;
-                    break;
+                    while (parteIntreaga != 0)
+                    {
+                        rest = (int)(parteIntreaga / 2); //pe baza faptului ca se imparte doar la 2 am gasist formula n-2*(n/2) = restul
+                        parteIntreagaConv.Push(rest);
+                        parteIntreaga = (int)(parteIntreaga / 2);
+                    }
+                    while (parteIntreagaConv.Count != 0)
+                    {
+                        Console.Write(parteIntreagaConv.Peek());
+                        parteIntreagaConv.Pop();
+                    }
+                    Console.Write("."); // despartirea partii intregi de cea fractionara
+                    bool ok = true;
+                    while (produs != 1 && ok == true)
+                    {
+                        produs = parteFractionara * 2;
+                        //Console.Write($"{(int)produs}"); // afisare 0 / 1
+                        parteFractionaraConv.Enqueue((int)produs);
+                        parteFractionara = produs - (int)produs;
+                        if (parteFractionara - 0.0000000001 < parteFractionaraInitiala
+                            && parteFractionara + 0.0000000001 > parteFractionaraInitiala)
+                        {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (ok == false && parteFractionaraInitiala != 0)
+                    {
+                        Console.Write("(");
+                        while (parteFractionaraConv.Count != 0)
+                        {
+
+                            Console.Write($"{parteFractionaraConv.Peek()}");
+                            parteFractionaraConv.Dequeue();
+                        }
+                        Console.Write(")");
+                    }
+                    else
+                    {
+                        while (parteFractionaraConv.Count != 0 && parteFractionaraInitiala != 0)
+                        {
+                            Console.Write($"{parteFractionaraConv.Peek()}");
+                            parteFractionaraConv.Dequeue();
+                        }
+                    }
                 }
-            }
-            if(ok==false)
-            {
-                Console.Write("(");
-                while(parteFractionaraBinar.Count!=0)
+                else //baza tinta diferita de 2
                 {
                     
-                    Console.Write( $"{parteFractionaraBinar.Peek()}");
-                    parteFractionaraBinar.Dequeue();
                 }
-                Console.Write(")");
             }
-            else
-            {
-                while (parteFractionaraBinar.Count != 0)
-                {
-                    Console.Write($"{parteFractionaraBinar.Peek()}");
-                    parteFractionaraBinar.Dequeue();
-                }
-            }    
-
         }
     }
 }
