@@ -19,17 +19,40 @@ namespace Conversion
             Console.WriteLine("     Base converter");
             Console.WriteLine("------------------------");
             Console.WriteLine("Introduceti baza din care vreti sa convertiti");
-            string bazaInit = Console.ReadLine();
+            int bazaInit = int.Parse(Console.ReadLine());
             Console.WriteLine("Introduceti baza in care vreti sa convertiti");
             int bazaTinta = int.Parse(Console.ReadLine());
             Console.WriteLine("Introduceti numarul pe care vreti sa il convertiti");
             string numar = Console.ReadLine();
             //sfarsit introducere
-            //trebuie sa aflam cate caractere sunt inainte si dupa punct
+            string parteIntreaga;
+            string parteFract;
+            int nrCifreInt=0;
+            int nrCifreFract=0;
             string[] split = numar.Split('.');
-            string parteIntreaga = split[0];
-            string parteFract = split[1];
-
+            if (split.Length > 1)
+            {
+                parteIntreaga = split[0];
+                parteFract = split[1];
+                nrCifreInt = parteIntreaga.Length;
+                nrCifreFract = parteFract.Length;
+            }
+            else
+            {
+                parteIntreaga = numar;
+                parteFract = null;
+                nrCifreFract = 0;
+            }
+            double suma = 0;
+            foreach(char c in parteIntreaga)
+            {
+                if (Char.IsDigit(c)&&nrCifreInt>=0)
+                {
+                    suma = (int)c * Math.Pow(bazaInit, nrCifreInt - 1);
+                    nrCifreInt--;
+                }
+            }
+            Console.WriteLine(suma);
         }
     }
 }
