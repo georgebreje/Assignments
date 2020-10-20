@@ -15,20 +15,17 @@ namespace Conversion
         static void Main(string[] args)
         {
             //introducere
-            Console.WriteLine("------------------------");
-            Console.WriteLine("     Base converter");
-            Console.WriteLine("------------------------");
-            Console.WriteLine("Introduceti baza din care vreti sa convertiti");
+            Console.Write("Convert from base ");
             int bazaInit = int.Parse(Console.ReadLine());
-            Console.WriteLine("Introduceti baza in care vreti sa convertiti");
+            Console.Write("to base ");
             int bazaTinta = int.Parse(Console.ReadLine());
-            Console.WriteLine("Introduceti numarul pe care vreti sa il convertiti");
+            Console.Write("the number ");
             string numar = Console.ReadLine();
-            //sfarsit introducere
             string parteIntreaga;
             string parteFract;
             int nrCifreInt=0;
             int nrCifreFract=0;
+            //splitting the number in fractional and integer
             string[] split = numar.Split('.');
             if (split.Length > 1)
             {
@@ -37,22 +34,31 @@ namespace Conversion
                 nrCifreInt = parteIntreaga.Length;
                 nrCifreFract = parteFract.Length;
             }
-            else
+            else //in case of a number without a fractional part
             {
                 parteIntreaga = numar;
+                nrCifreInt = parteIntreaga.Length;
                 parteFract = null;
                 nrCifreFract = 0;
             }
-            double suma = 0;
-            foreach(char c in parteIntreaga)
+            double sumaInt = 0; // sumaInt is used to calculate the integer's part converted value
+            // using ascii code for each character of the string the variable "sumaInt" 
+            // is getting values with the help of the polynomial formula for "base x to base 10 conversion"
+            foreach (char cifra in parteIntreaga)
             {
-                if (Char.IsDigit(c)&&nrCifreInt>=0)
+                if (Char.IsDigit(cifra) && nrCifreInt >= 0)
                 {
-                    suma = (int)c * Math.Pow(bazaInit, nrCifreInt - 1);
-                    nrCifreInt--;
+                    --nrCifreInt;
+                    sumaInt=sumaInt+ ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt);
                 }
+                else
+                {
+                    --nrCifreInt;
+                    sumaInt = sumaInt+ ((int)cifra - 55) * (int)Math.Pow(bazaInit, nrCifreInt);
+
+                }
+               // verificare sumaInt pt fiecare pas Console.WriteLine($"Suma pt pasul {nrCifreInt} este {sumaInt} ");
             }
-            Console.WriteLine(suma);
         }
     }
 }
