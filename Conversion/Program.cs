@@ -7,6 +7,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.IO; // pentru string
 using System.Security;
+using System.Reflection;
 
 namespace Conversion
 {
@@ -94,7 +95,50 @@ namespace Conversion
             }
             //variable suma is the new number in base 10
             //if target base is different of base 10 suma will be separated in integer and fractional part
-            //in the same context the algorithm "base 10 to target base" will be applied
+            //in the same case the algorithm "base 10 to target base" will be applied
+            if(bazaTinta==10)
+                Console.WriteLine("Result " + suma);
+            else
+            {
+                int parteIntS = (int)suma;
+                double parteFrS = suma - (int)suma;
+                int rest;
+                double produs=0;
+                Stack stInt = new Stack();
+                Queue qFr = new Queue();
+                while(parteIntS!=0)
+                {
+                    rest = parteIntS % bazaTinta;
+                    stInt.Push(rest);
+                    parteIntS = (int)(parteIntS / bazaTinta);
+                }
+                if (parteFrS != 0)
+                {
+                    produs = parteFrS * bazaTinta;
+                    qFr.Enqueue((int)produs);
+                    parteFrS = produs - (int)produs;
+                }
+                while((produs-(int)produs)!=0)
+                {
+                    produs = parteFrS * bazaTinta;
+                    qFr.Enqueue((int)produs);
+                    parteFrS = produs - (int)produs;
+                }
+                while(stInt.Count!=0)
+                {
+                    Console.Write(stInt.Peek());
+                    stInt.Pop();
+                }
+                if (qFr.Count != 0)
+                {
+                    Console.Write(".");
+                    while (qFr.Count > 0)
+                    {
+                        Console.Write(qFr.Peek());
+                        qFr.Dequeue();
+                    }
+                }
+            }
         }
     }
 }
