@@ -46,25 +46,24 @@ namespace Conversion
                     if (Char.IsDigit(cifra) && nrCifreInt >= 0)         
                     {
                         --nrCifreInt;
-                        sumaInt = sumaInt + ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt); 
+                        //sumaInt = sumaInt + ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt);
+                        sumaInt = sumaInt * bazaInit + ((int)cifra - (int)'0');
                     } 
                     else
                     {
                         --nrCifreInt;
-                        sumaInt = sumaInt + ((int)cifra - 55) * (int)Math.Pow(bazaInit, nrCifreInt);
-
+                        //sumaInt = sumaInt + ((int)cifra - 55) * (int)Math.Pow(bazaInit, nrCifreInt);
+                        sumaInt = sumaInt * bazaInit + ((int)cifra - (int)'A'+10);
                     }
                 }
                 double sumaFr = 0;
-                nrCifreFract = nrCifreFract * -1;
                 int counter = -1;
                 foreach (char cifraFr in parteFract)
                 {
                     if (Char.IsDigit(cifraFr))
                     {
-                        sumaFr = sumaFr + ((int)cifraFr - 48) * (Math.Pow(bazaInit, counter));
+                        sumaFr = sumaFr + ((int)cifraFr - (int)'0') * (Math.Pow(bazaInit, counter));
                         counter--;
-
                     }
                     else
                     {
@@ -106,15 +105,15 @@ namespace Conversion
                 double parteFrS = suma - (int)suma;
                 int rest;
                 double produs=0;
-                Stack stInt = new Stack();
-                Queue qFr = new Queue();
+                Stack<char> stInt = new Stack<char>();
+                Queue<char> qFr = new Queue<char>();
                 while(parteIntS!=0)
                 {
                     rest = parteIntS % bazaTinta; // conversion realised by calculating the modulo 
                     if (rest >= 10)                         // of the integer part and target base
                         stInt.Push((char)(rest + 55));
                     else
-                        stInt.Push(rest);
+                        stInt.Push((char)(rest+(int)'0'));
                     parteIntS = (int)(parteIntS / bazaTinta); //add values of the rest to the stack while integer part
                 }                                                           //can be divided
                 if (parteFrS != 0)          
@@ -144,7 +143,7 @@ namespace Conversion
                     while (qFr.Count > 0)      //displaying values from queue to form the fractional part
                     {                                        
                         Console.Write(qFr.Peek());
-                        qFr.Dequeue();
+                        qFr.Dequeue();0
                     }
                 }
             }
