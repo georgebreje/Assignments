@@ -16,12 +16,12 @@ namespace Conversion
         static void Main(string[] args)
         {
             //introducere
-            Console.Write("Convert from base ");
+            Console.Write("Convert the number ");
+            string numar = Console.ReadLine();
+            Console.Write("from base ");
             int bazaInit = int.Parse(Console.ReadLine());
             Console.Write("to base ");
             int bazaTinta = int.Parse(Console.ReadLine());
-            Console.Write("the number ");
-            string numar = Console.ReadLine();
             string parteIntreaga;
             string parteFract;
             int nrCifreInt = 0;
@@ -39,13 +39,13 @@ namespace Conversion
                 // sumaInt is used to calculate the integer's part converted value
                 // using ascii code for each character of the string the variable "sumaInt" 
                 // is getting values with the help of the polynomial formula for "base x to base 10 conversion"
-                foreach (char cifra in parteIntreaga)
-                {
-                    if (Char.IsDigit(cifra) && nrCifreInt >= 0)
+                foreach (char cifra in parteIntreaga)       // the same algorithm is applied for sumaFr
+                {                                           //if there is a fractional part of the number
+                    if (Char.IsDigit(cifra) && nrCifreInt >= 0)         
                     {
                         --nrCifreInt;
-                        sumaInt = sumaInt + ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt);
-                    }
+                        sumaInt = sumaInt + ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt); 
+                    } 
                     else
                     {
                         --nrCifreInt;
@@ -72,18 +72,18 @@ namespace Conversion
                 }
                 suma = sumaInt + sumaFr;
             }
-            else //in case of a number without a fractional part
-            {
-                parteIntreaga = numar;
+            else //in case of a number without a fractional part the program applies the same algorithm but
+            {                                                           //only for the integer part
+                parteIntreaga = numar;                                    
                 nrCifreInt = parteIntreaga.Length;
                 parteFract = null;
                 nrCifreFract = 0;
-                foreach (char cifra in parteIntreaga)
-                {
+                foreach (char cifra in parteIntreaga)     
+                {                                        
                     if (Char.IsDigit(cifra) && nrCifreInt >= 0)
                     {
                         --nrCifreInt;
-                        sumaInt = sumaInt + ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt);
+                        sumaInt = sumaInt + ((int)cifra - 48) * Math.Pow(bazaInit, nrCifreInt); 
                     }
                     else
                     {
@@ -108,37 +108,46 @@ namespace Conversion
                 Queue qFr = new Queue();
                 while(parteIntS!=0)
                 {
-                    rest = parteIntS % bazaTinta;
-                    stInt.Push(rest);
-                    parteIntS = (int)(parteIntS / bazaTinta);
-                }
-                if (parteFrS != 0)
+                    rest = parteIntS % bazaTinta; // conversion realised by calculating the modulo 
+                    if (rest >= 10)                         // of the integer part and target base
+                        stInt.Push((char)(rest + 55));
+                    else
+                        stInt.Push(rest);
+                    parteIntS = (int)(parteIntS / bazaTinta); //add values of the rest to the stack while integer part
+                }                                                           //can be divided
+                if (parteFrS != 0)          
                 {
-                    produs = parteFrS * bazaTinta;
-                    qFr.Enqueue((int)produs);
+                    produs = parteFrS * bazaTinta;  // conversion realised by calculating the result of the
+                    if (produs >= 10)               // multiplication of fractional part by target base
+                        qFr.Enqueue((char)(produs + 55));
+                    else
+                        qFr.Enqueue((int)produs);
+                    parteFrS = produs - (int)produs;  // using a queue because of the principle of the most significant bit
+                }
+                Console.WriteLine("Result:");
+                while((produs-(int)produs)!=0)  // for the condition to exist, a first step had to be done
+                {
+                    produs = parteFrS * bazaTinta;      // the same formula is applied until the integer part of the result
+                    qFr.Enqueue((int)produs);                                   //is 0
                     parteFrS = produs - (int)produs;
                 }
-                while((produs-(int)produs)!=0)
-                {
-                    produs = parteFrS * bazaTinta;
-                    qFr.Enqueue((int)produs);
-                    parteFrS = produs - (int)produs;
-                }
-                while(stInt.Count!=0)
+                while(stInt.Count!=0)   //displaying numbers from stack in order to form the integer part
                 {
                     Console.Write(stInt.Peek());
                     stInt.Pop();
                 }
-                if (qFr.Count != 0)
+                if (qFr.Count != 0)  //does not generate "." if there's no fractional part
                 {
-                    Console.Write(".");
-                    while (qFr.Count > 0)
-                    {
+                    Console.Write("."); 
+                    while (qFr.Count > 0)      //displaying values from queue in order to form the fractional part
+                    {                                        
                         Console.Write(qFr.Peek());
                         qFr.Dequeue();
                     }
                 }
             }
+            Console.WriteLine();
+            Console.ReadKey();
         }
     }
 }
