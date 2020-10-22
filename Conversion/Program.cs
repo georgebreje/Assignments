@@ -15,6 +15,9 @@ namespace Conversion
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("************************************************************");
+            Console.WriteLine("The program will convert your number from a base to another");
+            Console.WriteLine("************************************************************");
             Console.Write("Convert the number ");
             string numar = Console.ReadLine();
             Console.Write("from base ");
@@ -146,6 +149,7 @@ namespace Conversion
                 }
             }
             Console.WriteLine();
+            Console.WriteLine("************************************************************");
             Console.ReadKey();
         }
     }
