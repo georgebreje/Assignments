@@ -149,7 +149,6 @@ namespace Conversion
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("************************************************************");
             Console.ReadKey();
         }
     }
