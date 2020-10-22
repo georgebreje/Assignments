@@ -37,7 +37,7 @@ namespace Conversion
                     throw new Exception("Enter a number");
                 foreach (char cifra in numar)    
                 {                                
-                    if (Char.IsDigit(cifra))         
+                    if (Char.IsDigit(cifra) && cifra != '.')         
                     {
                         --nrCifre;
                         nrBaza10 = nrBaza10 + ((int)cifra - (int)'0') * Math.Pow(bazaInit, nrCifre);
@@ -47,6 +47,7 @@ namespace Conversion
                         --nrCifre;
                         nrBaza10 = nrBaza10 + ((int)cifra - (int)'A' + 10) * Math.Pow(bazaInit, nrCifre); 
                     }
+                Console.WriteLine($"numarbaza10 {nrBaza10} la pasul {nrCifre}");
                 }
             //variable suma is the new number in base 10
             //if target base is different of base 10 suma will be separated in integer and fractional part
