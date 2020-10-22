@@ -15,7 +15,6 @@ namespace Conversion
     {
         static void Main(string[] args)
         {
-            //introducere
             Console.Write("Convert the number ");
             string numar = Console.ReadLine();
             Console.Write("from base ");
@@ -97,7 +96,7 @@ namespace Conversion
             //if target base is different of base 10 suma will be separated in integer and fractional part
             //in the same case the algorithm "base 10 to target base" will be applied
             if(bazaTinta==10)
-                Console.WriteLine("Result " + suma);
+                Console.WriteLine("Result: " + suma);
             else
             {
                 int parteIntS = (int)suma;
@@ -139,7 +138,7 @@ namespace Conversion
                 if (qFr.Count != 0)  //does not generate "." if there's no fractional part
                 {
                     Console.Write("."); 
-                    while (qFr.Count > 0)      //displaying values from queue in order to form the fractional part
+                    while (qFr.Count > 0)      //displaying values from queue to form the fractional part
                     {                                        
                         Console.Write(qFr.Peek());
                         qFr.Dequeue();
