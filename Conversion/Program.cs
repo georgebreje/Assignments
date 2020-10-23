@@ -16,122 +16,129 @@ namespace Conversion
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("************************************************************");
-            Console.WriteLine("The program will convert your number from a base to another");
-            Console.WriteLine("************************************************************");
+            //introducere
             Console.Write("Convert the number ");
             string numar = Console.ReadLine();
             Console.Write("from base ");
             int bazaInit = int.Parse(Console.ReadLine());
             Console.Write("to base ");
             int bazaTinta = int.Parse(Console.ReadLine());
-            double nrBaza10 = 0;
-            int nrCifre=0;
-            bool negativ = false;
+            string parteIntreaga;
+            string parteFract;
+            int nrCifreInt = 0;
+            int nrCifreFract = 0;
+            double sumaInt = 0;
+            double suma = 0;
+            //splitting the number in fractional and integer
             string[] split = numar.Split('.');
             if (split.Length > 1)
-                nrCifre = numar.Length - 1;
-            else
-                if (split.Length <= 1)
-                nrCifre = numar.Length;
-            else
-                if (split.Length > 2)
-                    throw new Exception("Enter a number");
-                foreach (char cifra in numar)    
+            {
+                parteIntreaga = split[0];
+                parteFract = split[1];
+                nrCifreInt = parteIntreaga.Length;
+                nrCifreFract = parteFract.Length;
+                // sumaInt is used to calculate the integer's part converted value
+                // using ascii code for each character of the string the variable "sumaInt" 
+                // is getting values with the help of the polynomial formula for "base x to base 10 conversion"
+                foreach (char cifra in parteIntreaga)
                 {
-                if (Char.IsDigit(cifra) && cifra != '.' && negativ==false)
-                {
-                    nrCifre--;
-                    nrBaza10 = nrBaza10 +  ((int)cifra - (int)'0') * Math.Pow(bazaInit, nrCifre);
+                    if (Char.IsDigit(cifra) && nrCifreInt >= 0)
+                    {
+                        --nrCifreInt;
+                        sumaInt = sumaInt + ((int)cifra - (int)'0') * Math.Pow(bazaInit, nrCifreInt);
+                    }
+                    else
+                    {
+                        --nrCifreInt;
+                        sumaInt = sumaInt + ((int)cifra - (int)'A'+10) * (int)Math.Pow(bazaInit, nrCifreInt);
+                    }
                 }
-                else
-                if (cifra != '.' && !Char.IsDigit(cifra) && negativ==false)
+                double sumaFr = 0;
+                nrCifreFract = nrCifreFract * -1;
+                int counter = -1;
+                foreach (char cifraFr in parteFract)
                 {
-                    nrCifre--;
-                    nrBaza10 = nrBaza10 + ((int)cifra - (int)'A' ) * Math.Pow(bazaInit, nrCifre);
+                    if (Char.IsDigit(cifraFr))
+                    {
+                        sumaFr = sumaFr + ((int)cifraFr - (int)'0' * Math.Pow(bazaInit, counter));
+                        counter--;
+                    }
+                    else
+                    {
+                        sumaFr = sumaFr + ((int)cifraFr - (int)'A'+ 10) * (Math.Pow(bazaInit, counter));
+                        counter--;
+                    }
                 }
-                else
-                if (Char.IsDigit(cifra) && cifra != '.' && negativ == true)
+                suma = sumaInt + sumaFr;
+            }
+            else //in case of a number without a fractional part
+            {
+                parteIntreaga = numar;
+                nrCifreInt = parteIntreaga.Length;
+                parteFract = null;
+                nrCifreFract = 0;
+                foreach (char cifra in parteIntreaga)
                 {
-                    nrBaza10 = nrBaza10 + ((int)cifra - (int)'A' ) * Math.Pow(bazaInit, nrCifre);
-                    nrCifre--;
+                    if (Char.IsDigit(cifra) && nrCifreInt >= 0)
+                    {
+                        --nrCifreInt;
+                        sumaInt = sumaInt + ((int)cifra - (int)'0') * Math.Pow(bazaInit, nrCifreInt);
+                    }
+                    else
+                    {
+                        --nrCifreInt;
+                        sumaInt = sumaInt + ((int)cifra - (int)'A'+10) * (int)Math.Pow(bazaInit, nrCifreInt);
+                    }
                 }
-                else
-                if (cifra != '.' && Char.IsDigit(cifra) == false && negativ == true)
-                {
-                    nrBaza10 = nrBaza10 + ((int)cifra - (int)'A') * Math.Pow(bazaInit, nrCifre);
-                    nrCifre--;
-                }
-                else 
-                if (cifra == '.')
-                {
-                    negativ = true;
-                    nrCifre = 0;
-                }
-                Console.WriteLine("*****************");
-                Console.WriteLine($"cifra: {cifra}");
-                Console.WriteLine($"calcul unicode pt litera{(int)cifra - (int)'A'+10 }");
-                Console.WriteLine($"calcul unicode pt cifra{(int)cifra - (int)'0'}");
-                Console.WriteLine($"nr cifre:  {nrCifre}");
-                Console.WriteLine($"math pow : {Math.Pow(bazaInit, nrCifre)}");
-                Console.WriteLine($"numar baza 10 : {nrBaza10}");
-                Console.WriteLine("*****************");
+                suma = sumaInt;
             }
             //variable suma is the new number in base 10
             //if target base is different of base 10 suma will be separated in integer and fractional part
+            //in the same context the algorithm "base 10 to target base" will be applied
             //in the same case the algorithm "base 10 to target base" will be applied
-            if (bazaTinta==10)
-                Console.WriteLine("Result: " + nrBaza10);
+            if (bazaTinta == 10)
+                Console.WriteLine("Result " + suma);
             else
             {
-                int parteIntS = (int)nrBaza10;
-                double parteFrS = nrBaza10 - (int)nrBaza10;
+                int parteIntS = (int)suma;
+                double parteFrS = suma - (int)suma;
                 int rest;
-                double produs=0;
-                Stack<char> stInt = new Stack<char>();
-                Queue<char> qFr = new Queue<char>();
-                while(parteIntS!=0)
+                double produs = 0;
+                Stack stInt = new Stack();
+                Queue qFr = new Queue();
+                while (parteIntS != 0)
                 {
-                    rest = parteIntS % bazaTinta; // conversion realised by calculating the modulo 
-                    if (rest >= 10)                         // of the integer part and target base
-                        stInt.Push((char)(rest + (int)'A'));
-                    else
-                        stInt.Push((char)(rest+(int)'0'));
-                    parteIntS = (int)(parteIntS / bazaTinta); //add values of the rest to the stack while integer part
-                }                                                           //can be divided
-                if (parteFrS != 0)          
-                {
-                    produs = parteFrS * bazaTinta;  // conversion realised by calculating the result of the
-                    if (produs >= 10)               // multiplication of fractional part by target base
-                        qFr.Enqueue((char)(produs + (int)'A'));
-                    else
-                        qFr.Enqueue((char)((int)produs+(int)'0'));
-                    parteFrS = produs - (int)produs;  // using a queue because of the principle of the most significant bit
+                    rest = parteIntS % bazaTinta;
+                    stInt.Push(rest);
+                    parteIntS = (int)(parteIntS / bazaTinta);
                 }
-                Console.WriteLine("Result:");
-                while((produs-(int)produs)!=0)  // for the condition to exist, a first step had to be done
+                if (parteFrS != 0)
                 {
-                    produs = parteFrS * bazaTinta;      // the same formula is applied until the integer part of the result
-                    qFr.Enqueue((char)((int)produs));                                   //is 0
+                    produs = parteFrS * bazaTinta;
+                    qFr.Enqueue((int)produs);
                     parteFrS = produs - (int)produs;
                 }
-                while(stInt.Count!=0)   //displaying numbers from stack in order to form the integer part
+                while ((produs - (int)produs) != 0)
+                {
+                    produs = parteFrS * bazaTinta;
+                    qFr.Enqueue((int)produs);
+                    parteFrS = produs - (int)produs;
+                }
+                while (stInt.Count != 0)
                 {
                     Console.Write(stInt.Peek());
                     stInt.Pop();
                 }
-                if (qFr.Count != 0)  //does not generate "." if there's no fractional part
+                if (qFr.Count != 0)
                 {
-                    Console.Write("."); 
-                    while (qFr.Count > 0)      //displaying values from queue to form the fractional part
-                    {                                        
+                    Console.Write(".");
+                    while (qFr.Count > 0)
+                    {
                         Console.Write(qFr.Peek());
                         qFr.Dequeue();
                     }
                 }
             }
-            Console.WriteLine();
-            Console.ReadKey();
         }
     }
 }
