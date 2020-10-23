@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.IO; // pentru string
 using System.Security;
 using System.Reflection;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace Conversion
 {
@@ -26,6 +27,7 @@ namespace Conversion
             int bazaTinta = int.Parse(Console.ReadLine());
             double nrBaza10 = 0;
             int nrCifre=0;
+            bool negativ = false;
             string[] split = numar.Split('.');
             if (split.Length > 1)
                 nrCifre = numar.Length - 1;
@@ -36,23 +38,49 @@ namespace Conversion
                 if (split.Length > 2)
                     throw new Exception("Enter a number");
                 foreach (char cifra in numar)    
-                {                                
-                    if (Char.IsDigit(cifra) && cifra != '.')         
-                    {
-                        --nrCifre;
-                        nrBaza10 = nrBaza10 + ((int)cifra - (int)'0') * Math.Pow(bazaInit, nrCifre);
-                    } 
-                    else
-                    {
-                        --nrCifre;
-                        nrBaza10 = nrBaza10 + ((int)cifra - (int)'A' + 10) * Math.Pow(bazaInit, nrCifre); 
-                    }
-                Console.WriteLine($"numarbaza10 {nrBaza10} la pasul {nrCifre}");
+                {
+                if (Char.IsDigit(cifra) && cifra != '.' && negativ==false)
+                {
+                    nrCifre--;
+                    nrBaza10 = nrBaza10 +  ((int)cifra - (int)'0') * Math.Pow(bazaInit, nrCifre);
                 }
+                else
+                if (cifra != '.' && !Char.IsDigit(cifra) && negativ==false)
+                {
+                    nrCifre--;
+                    nrBaza10 = nrBaza10 + ((int)cifra - (int)'A' ) * Math.Pow(bazaInit, nrCifre);
+                }
+                else
+                if (Char.IsDigit(cifra) && cifra != '.' && negativ == true)
+                {
+                    nrBaza10 = nrBaza10 + ((int)cifra - (int)'A' ) * Math.Pow(bazaInit, nrCifre);
+                    nrCifre--;
+                }
+                else
+                if (cifra != '.' && Char.IsDigit(cifra) == false && negativ == true)
+                {
+                    nrBaza10 = nrBaza10 + ((int)cifra - (int)'A') * Math.Pow(bazaInit, nrCifre);
+                    nrCifre--;
+                }
+                else 
+                if (cifra == '.')
+                {
+                    negativ = true;
+                    nrCifre = 0;
+                }
+                Console.WriteLine("*****************");
+                Console.WriteLine($"cifra: {cifra}");
+                Console.WriteLine($"calcul unicode pt litera{(int)cifra - (int)'A'+10 }");
+                Console.WriteLine($"calcul unicode pt cifra{(int)cifra - (int)'0'}");
+                Console.WriteLine($"nr cifre:  {nrCifre}");
+                Console.WriteLine($"math pow : {Math.Pow(bazaInit, nrCifre)}");
+                Console.WriteLine($"numar baza 10 : {nrBaza10}");
+                Console.WriteLine("*****************");
+            }
             //variable suma is the new number in base 10
             //if target base is different of base 10 suma will be separated in integer and fractional part
             //in the same case the algorithm "base 10 to target base" will be applied
-            if(bazaTinta==10)
+            if (bazaTinta==10)
                 Console.WriteLine("Result: " + nrBaza10);
             else
             {
