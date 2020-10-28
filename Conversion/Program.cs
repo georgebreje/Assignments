@@ -10,15 +10,14 @@ using System.Security;
 using System.Reflection;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Runtime.CompilerServices;
+using System.Dynamic;
 
 namespace Conversion
 {
     class Program
     {
-        static void checkNumber(string number, int initBase)
+        public static void CheckNumber(string number, int initBase)
         {
-            bool flag;
-            flag = true;
             foreach (char digit in number)
             {
                 if (Char.IsDigit(digit))
@@ -26,55 +25,92 @@ namespace Conversion
                     if ((int)digit - (int)'0' > initBase)
                     {
                         throw new Exception("Incorrect number");
-                        return 1;
                     }
                 }
                 else
                 {
-                    if ((int)digit - (int)'A' + 10 > initBase)
+                    
+                    if ( (int)Char.ToUpper(digit) - (int)'A' + 10 > initBase)
                     {
                         throw new Exception("Incorrect number");
-                        return 1;
 
                     }
                 }
-                if (!Char.IsDigit(digit) && digit != '.')
+                if (digit != '.' && !Char.IsLetter(digit) && !Char.IsDigit(digit))
                 {
                     throw new Exception("Incorrect input");
-                    return 1;
                 }
             }
-
             string[] split = number.Split('.');
             if (split.Length > 2)
             {
                 throw new Exception("Incorrect number");
-                return false;
             }
         }
-        
-    static void Main(string[] args)
-    {
-        Console.Write("Convert the number ");
-            string number = checkNumber();
-        Console.Write("from base ");
-        int initBase = int.Parse(Console.ReadLine());
-        Console.Write("to base ");
-        int targetBase = int.Parse(Console.ReadLine());
-        double suma = 0;
-        string[] split = number.Split('.');
-        Console.WriteLine(split[0]);
-        int counter = split[0].Length - 1;
-        foreach (char digit in number)
+        public static double ToBase10(string number,int initBase)
         {
-            if (Char.IsDigit(digit) && digit != '.')
-                suma = suma + ((int)digit - (int)'0') * Math.Pow(initBase, counter);
-            else if (!Char.IsDigit(digit) && digit != '.')
-                suma = suma + ((int)digit - (int)'A' + 10) * Math.Pow(initBase, counter);
-            else if (digit == '.')
-                counter = 0;
-            counter--;
+            double suma = 0;
+            string[] split = number.Split('.');
+            int counter = split[0].Length - 1;
+            foreach (char digit in number)
+            {
+                if (Char.IsDigit(digit) && digit != '.')
+                    suma = suma + ((int)digit - (int)'0') * Math.Pow(initBase, counter);
+                else if (!Char.IsDigit(digit) && digit != '.')
+                    suma = suma + ((int)digit - (int)'A' + 10) * Math.Pow(initBase, counter);
+                else if (digit == '.')
+                    counter = 0;
+                counter--;
+            }
+            return suma;
+        }
+        public static void TargetBase(double numberBase10,int targetBase)
+        {
+            double rest=0;
+            double produs = numberBase10-(int)numberBase10;
+            int numberBase10Int = (int)numberBase10;
+            Stack<char> stack = new Stack<char>();
+            Queue<char> queue = new Queue<char>();
+            while(numberBase10Int!=0)
+            {
+                rest = numberBase10Int % targetBase;
+                numberBase10Int = (int)(numberBase10Int / targetBase);
+                if (rest >= 10)
+                    stack.Push((char)(rest + (int)'A'));
+                else
+                    stack.Push((char)(rest + (int)'0'));
+            }
+            while (stack.Count > 0)
+            {
+               Console.Write(stack.Pop());
+            }
+            if (numberBase10 - (int)numberBase10 != 0)
+                Console.Write('.');
+            while(produs-(int)produs!=0)
+            {
+                produs = (produs - (int)produs) * targetBase;
+                if ((int)produs >= 10)
+                    queue.Enqueue((char)((int)produs + (int)'A'));
+                else
+                    queue.Enqueue((char)((int)produs + (int)'0'));
+            }
+            while(queue.Count>0)
+            {
+                Console.Write(queue.Peek());
+                queue.Dequeue();
+            }
+        }
+        public static void Main(string[] args)
+        {
+            Console.Write("Convert the number ");
+            string number = Console.ReadLine();
+            Console.Write("from base ");
+            int initBase = int.Parse(Console.ReadLine());
+            CheckNumber(number, initBase);
+            Console.Write("to base ");
+            int targetBase = int.Parse(Console.ReadLine());
+            double numberBase10 = ToBase10(number, initBase);
+            TargetBase(numberBase10,targetBase);
         }
     }
-}
 }
