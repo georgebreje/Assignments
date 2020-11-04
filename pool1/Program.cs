@@ -13,7 +13,7 @@ namespace pool1
     {
         static void Main(string[] args)
         {
-            /*Problema1();
+            Problema1();
             Problema2();
             Problema3();
             Problema4();
@@ -31,35 +31,56 @@ namespace pool1
             Problema16();
             Problema17();
             Problema18();
-            Problema19();*/
+            Problema19();
             Problema20();
+            Problema21();
 
         }
 
-        private static string Problema20()
+        static Random rnd = new Random();
+        private static void Problema21()
+        {
+            int x = rnd.Next(1024);
+            int minx = 0, maxix = 1024;
+            Console.WriteLine("Raspundeti cu da sau nu. Daca s-a gasit numarul scrieti stop");
+            Console.WriteLine($"Numarul este mai mare sau egal decat {x}?");
+            string check = Console.ReadLine();
+            while (check == "da" || check =="nu")
+            {
+                Console.WriteLine($"Numarul este mai mare sau egal decat {x}?");
+                check = Console.ReadLine();
+                if (check == "da")
+                {
+                    minx = x;
+                    x = rnd.Next(minx, maxix);
+                }
+                else
+                {
+                    maxix = x;
+                    x = rnd.Next(minx, maxix);
+                }
+            }
+        }
+
+        private static void Problema20()
         {
             Console.WriteLine("Introduceti m n");
-            int numr = int.Parse(Console.ReadLine());
-            int denr = int.Parse(Console.ReadLine());
-            string result="";
+            float m = float.Parse(Console.ReadLine());
+            float n = float.Parse(Console.ReadLine());
+            float fr = m / n;
+            Console.WriteLine(fr);
+            string res = "";
             Dictionary<int, int> mp = new Dictionary<int, int>();
-            int rem=numr%denr;  
-            while((rem!=0)&& !mp.ContainsValue(rem))
+            int rem = (int)(m % n);
+            while ((rem != 0) && (!mp.ContainsValue(rem)))
             {
-                mp[rem] = result.Length;
+                mp[rem] = res.Length;
                 rem = rem * 10;
-                int res_part = rem / denr;
-                result += res_part.ToString();
-                rem = rem % denr;   
+                int res_part = (int)(rem / n);
+                res += res_part.ToString();
+                rem = (int)(rem % n);
             }
-            if (rem == 0)
-                return " ";
-            else
-    if (mp.ContainsKey(rem))
-                return result.Substring(mp[rem]);
-            return "";
         }
-
         private static void Problema19()
         {
             Console.WriteLine("Introduceti n");
@@ -68,7 +89,7 @@ namespace pool1
             int nr = 0;
             for (int i = 0; i < 10; i++)
                 v[i] = 0;
-            while(n!=0)
+            while (n != 0)
             {
                 v[n % 10]++;
                 n /= 10;
@@ -76,7 +97,7 @@ namespace pool1
             for (int i = 0; i < 10; i++)
                 if (v[i] != 0)
                     nr++;
-            if(nr ==2)
+            if (nr == 2)
                 Console.WriteLine("Da");
             else
                 Console.WriteLine("Nu");
@@ -88,10 +109,10 @@ namespace pool1
             int n = int.Parse(Console.ReadLine());
             int d = 2;
             int p = 0;
-            while(n>1)
+            while (n > 1)
             {
                 p = 0;
-                while(n%d==0)
+                while (n % d == 0)
                 {
                     ++p;
                     n /= d;
@@ -114,7 +135,7 @@ namespace pool1
             int ac = a;
             int bc = b;
             int c, d;
-            while(a!=b)
+            while (a != b)
             {
                 if (a > b)
                     a -= b;
@@ -123,7 +144,7 @@ namespace pool1
             }
             c = ac;
             d = bc;
-            while(ac!=bc)
+            while (ac != bc)
             {
                 if (bc < ac)
                     bc += c;
@@ -149,7 +170,7 @@ namespace pool1
                         Console.WriteLine($"{e} {d} {c} {b} {a}");
                     else if (c >= d && c >= e && e >= d)
                         Console.WriteLine($"{d} {e} {c} {b} {a}");
-                    else if (d >= c && d >= e && c>=e)
+                    else if (d >= c && d >= e && c >= e)
                         Console.WriteLine($"{e} {c} {d} {b} {a}");
                     else if (d >= e && d >= c && e >= c)
                         Console.WriteLine($"{c} {e} {d} {b} {a}");
@@ -168,9 +189,9 @@ namespace pool1
                         Console.WriteLine($"{d} {b} {e} {c} {a}");
                     else if (e >= d && e >= b && d >= b)
                         Console.WriteLine($"{b} {d} {e} {c} {a}");
-                    else if(d>=b && d>=e && e>=b)
+                    else if (d >= b && d >= e && e >= b)
                         Console.WriteLine($"{b} {e} {d} {c} {a}");
-                    else if (d >= b && d >= e && b>= e)
+                    else if (d >= b && d >= e && b >= e)
                         Console.WriteLine($"{e} {b} {d} {c} {a}");
 
                 }
@@ -213,13 +234,13 @@ namespace pool1
                         Console.WriteLine($"{e} {d} {c} {a} {b}");
                     else if (c >= d && c >= e && e >= d)
                         Console.WriteLine($"{d} {e} {c} {a} {b}");
-                    else if(d >= c && d >= e && c >= e)
+                    else if (d >= c && d >= e && c >= e)
                         Console.WriteLine($"{e} {c} {d} {a} {b}");
-                    else if(d >= c && d >= e && e >= c)
+                    else if (d >= c && d >= e && e >= c)
                         Console.WriteLine($"{c} {e} {d} {a} {b}");
-                    else if(e >= d && e >= c && d >= c)
+                    else if (e >= d && e >= c && d >= c)
                         Console.WriteLine($"{c} {d} {e} {a} {b}");
-                    else if(e >= d && e >= c && c >= d)
+                    else if (e >= d && e >= c && c >= d)
                         Console.WriteLine($"{d} {c} {e} {a} {b}");
                 }
                 else if (c >= a && c >= d && c >= e)
@@ -254,11 +275,11 @@ namespace pool1
                 }
                 else if (e >= a && e >= d && e >= c)
                 {
-                    if(d>=a && d>=c && c>=a)
+                    if (d >= a && d >= c && c >= a)
                         Console.WriteLine($"{a} {c} {d} {e} {b}");
-                    else if(d >= a && d >= c && a >= c)
+                    else if (d >= a && d >= c && a >= c)
                         Console.WriteLine($"{c} {a} {d} {e} {b}");
-                    else if (a >= d && a >= c && d>=c)
+                    else if (a >= d && a >= c && d >= c)
                         Console.WriteLine($"{c} {d} {a} {e} {b}");
                     else if (a >= d && d >= c && c >= d)
                         Console.WriteLine($"{d} {c} {a} {e} {b}");
@@ -268,7 +289,7 @@ namespace pool1
                         Console.WriteLine($"{a} {d} {c} {e} {b}");
                 }
             }
-            else if (c >= a && c >= b&& c >= d && c >= e)
+            else if (c >= a && c >= b && c >= d && c >= e)
             {
                 if (a >= b && a >= d && a >= e)
                 {
@@ -306,9 +327,9 @@ namespace pool1
                         Console.WriteLine($"{e} {a} {b} {d} {c}");
                     else if (b >= a && b >= e && e >= a)
                         Console.WriteLine($"{a} {e} {b} {d} {c}");
-                    else if (e >= a &&  e>= b &&  b >= a)
+                    else if (e >= a && e >= b && b >= a)
                         Console.WriteLine($"{a} {b} {e} {d} {c}");
-                    else if (e >= b &&  e>= a && a >= b)
+                    else if (e >= b && e >= a && a >= b)
                         Console.WriteLine($"{b} {a} {e} {d} {c}");
                     else if (a >= b && a >= e && b >= e)
                         Console.WriteLine($"{e} {b} {a} {d} {c}");
@@ -317,7 +338,7 @@ namespace pool1
                 }
                 else if (e >= a && e >= d && e >= b)
                 {
-                    if(d>=b && d>=a && b>=a)
+                    if (d >= b && d >= a && b >= a)
                         Console.WriteLine($"{a} {b} {d} {e} {c}");
                     else if (d >= b && d >= a && a >= b)
                         Console.WriteLine($"{b} {a} {d} {e} {c}");
@@ -382,8 +403,8 @@ namespace pool1
 
                 else if (e >= a && e >= c && e >= b)
                 {
-                    if(c>=a && c>=b && b>=a)
-                        Console.WriteLine($"{a} {b} {c} {e} {d}"); 
+                    if (c >= a && c >= b && b >= a)
+                        Console.WriteLine($"{a} {b} {c} {e} {d}");
                     else if (c >= a && c >= b && a >= b)
                         Console.WriteLine($"{b} {a} {c} {e} {d}");
                     else if (b >= c && b >= a && a >= c)
@@ -414,8 +435,8 @@ namespace pool1
                         Console.WriteLine($"{d} {b} {c} {a} {e}");
                 }
                 else if (b >= a && b >= c && b >= d)
-                {   
-                    if(a>=c && a>=d && c>=d)
+                {
+                    if (a >= c && a >= d && c >= d)
                         Console.WriteLine($"{d} {c} {a} {b} {e}");
                     else if (a >= c && a >= d && d >= c)
                         Console.WriteLine($"{c} {d} {a} {b} {e}");
@@ -430,7 +451,7 @@ namespace pool1
                 }
                 else if (c >= a && c >= d && c >= b)
                 {
-                    if(b>=a && b>=d && a>=d)
+                    if (b >= a && b >= d && a >= d)
                         Console.WriteLine($"{d} {a} {b} {c} {e}");
                     else if (b >= a && b >= d && d >= a)
                         Console.WriteLine($"{a} {d} {b} {c} {e}");
@@ -445,8 +466,8 @@ namespace pool1
                 }
                 else if (d >= a && d >= c && d >= b)
                 {
-                    if(c>=b && c>=a && b>=a)
-                      Console.WriteLine($"{a} {b} {c} {d} {e}");
+                    if (c >= b && c >= a && b >= a)
+                        Console.WriteLine($"{a} {b} {c} {d} {e}");
                     else if (c >= b && c >= a && a >= b)
                         Console.WriteLine($"{b} {a} {c} {d} {e}");
                     else if (a >= b && a >= c && c >= b)
@@ -467,23 +488,23 @@ namespace pool1
             int a = int.Parse(Console.ReadLine());
             int b = int.Parse(Console.ReadLine());
             int c = int.Parse(Console.ReadLine());
-            if (a >= b && a>=c)
+            if (a >= b && a >= c)
             {
                 if (b >= c)
                     Console.WriteLine($"{c} {b} {a}");
                 else
                     Console.WriteLine($"{b} {c} {a}");
             }
-            else if (b >=a && b>=c )
+            else if (b >= a && b >= c)
             {
                 if (a >= c)
                     Console.WriteLine($"{c} {a} {b}");
-                else 
+                else
                     Console.WriteLine($"{a} {c} {b}");
             }
-            else if(c>=a && c>=b)
+            else if (c >= a && c >= b)
             {
-                if(a>=b)
+                if (a >= b)
                     Console.WriteLine($"{b} {a} {c}");
                 else
                     Console.WriteLine($"{a} {b} {c}");
@@ -496,12 +517,12 @@ namespace pool1
             int n = int.Parse(Console.ReadLine());
             int og = 0;
             int c = n;
-            while(c!=0)
+            while (c != 0)
             {
                 og = og * 10 + c % 10;
                 c /= 10;
             }
-            if(og==n)
+            if (og == n)
                 Console.WriteLine("palindrom");
             else
                 Console.WriteLine("nu este palindrom");
@@ -514,8 +535,8 @@ namespace pool1
             int b = int.Parse(Console.ReadLine());
             int counter = 0;
             int i = a + 1;
-            while (i < b) 
-            { 
+            while (i < b)
+            {
                 if (i % 4 == 0)
                 {
                     counter++;
@@ -547,7 +568,7 @@ namespace pool1
             Console.WriteLine("Introduceti n");
             int n = int.Parse(Console.ReadLine());
             Console.WriteLine("Cifrele in ordine inversa sunt: ");
-            while(n!=0)
+            while (n != 0)
             {
                 Console.Write(n % 10 + ',');
                 n /= 10;
@@ -573,16 +594,16 @@ namespace pool1
                         Console.Write("Nu este prim");
                         break;
                     }
-            } 
+            }
         }
 
         private static void Problema9()
         {
             Console.WriteLine("Introduceti n");
             int n = int.Parse(Console.ReadLine());
-            for(int i=1;i<=n;i++)
-                if(n%i==0)
-                Console.Write($"{i},");
+            for (int i = 1; i <= n; i++)
+                if (n % i == 0)
+                    Console.Write($"{i},");
         }
 
         private static void Problema8()
@@ -601,11 +622,11 @@ namespace pool1
 
         private static void Problema7()
         {
-            Console.WriteLine("Introudceti a si b"); 
+            Console.WriteLine("Introudceti a si b");
             int a = int.Parse(Console.ReadLine());
             int b = int.Parse(Console.ReadLine());
             int aux = 0;
-            Console.WriteLine( $"Salvam in aux  care are valoarea {aux} numarul {a}");
+            Console.WriteLine($"Salvam in aux  care are valoarea {aux} numarul {a}");
             aux = a;
             Console.WriteLine($"In urma acestui pas aux are valoarea {aux}");
             a = b;
@@ -620,9 +641,9 @@ namespace pool1
             int a = int.Parse(Console.ReadLine());
             int b = int.Parse(Console.ReadLine());
             int c = int.Parse(Console.ReadLine());
-            if(a+b<c)
+            if (a + b < c)
                 Console.WriteLine("Nu se poate forma triunghi");
-            else if(a+c<b)
+            else if (a + c < b)
                 Console.WriteLine("Nu se poate forma triunghi");
             else if (b + c < a)
                 Console.WriteLine("Nu se poate forma triunghi");
@@ -636,7 +657,7 @@ namespace pool1
             int n = int.Parse(Console.ReadLine());
             int k = int.Parse(Console.ReadLine());
             int nr = 0;
-            while(n!=0)
+            while (n != 0)
             {
                 nr++;
                 n /= 10;
@@ -652,7 +673,7 @@ namespace pool1
         {
             Console.WriteLine("Introduceti anul");
             int n = int.Parse(Console.ReadLine());
-            if(n%4==0)
+            if (n % 4 == 0)
                 Console.WriteLine("An bisect");
             else
                 Console.WriteLine("Nu este an bisect");
@@ -675,20 +696,20 @@ namespace pool1
             int a = int.Parse(Console.ReadLine());
             int b = int.Parse(Console.ReadLine());
             int c = int.Parse(Console.ReadLine());
-            double x1,x2;
+            double x1, x2;
             double delta = b * b - 4 * a * c;
             if (delta > 0)
             {
-                x1 = (-b - Math.Sqrt(delta))/2*a;
+                x1 = (-b - Math.Sqrt(delta)) / 2 * a;
                 x2 = (-b + Math.Sqrt(delta)) / 2 * a;
                 Console.WriteLine($"x1 = {x1} si x2 = {x2}");
             }
-            else if(delta==0)
+            else if (delta == 0)
             {
                 x1 = (-b) / 2 * a;
                 Console.WriteLine($"x1=x2={x1}");
             }
-            else if(delta<0)
+            else if (delta < 0)
             {
                 x1 = (-b - Math.Sqrt(-delta)) / 2 * a;
                 x2 = (-b + Math.Sqrt(-delta)) / 2 * a;
