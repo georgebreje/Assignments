@@ -24,14 +24,15 @@ namespace HexViewer
                 string hex = BitConverter.ToString(ba);
                 string text = null;
                 for (int i = 0; i < actual; i++)
-                    (char)ba[i].ToString();
-
-                
-                
+                {
+                    if (ba[i] < ' ')
+                        text+= ".";
+                    else
+                        text+= ((char)ba[i]).ToString() ;
+                }    
                 Console.WriteLine($"{counter:X8}: {hex} | {text}");
                 counter++;
             }
         }
-
     }
 }
