@@ -14,12 +14,188 @@ namespace pool3
             //problema1();
             //problema2();
             //problema3();
-            problema4();
+            //problema4();
+            //problema5();
+            //problema6();
+            //problema7();
+            //problema8();
+            //problema9();
+            //problema10();
+            problema11();
+        }
+
+        private static void problema11()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] a = new int [n];
+            for (int i = 0; i < n; i++)
+                a[i] = 0;
+            a[0] = 1;
+            a[1] = 1;
+            for(int i=2;i<Math.Sqrt(n);i++)
+            {
+                if(a[i]==0)
+                {
+                    for (int j = 2; j < n / i; j++)
+                        a[i * j] = 1;
+                }
+            }
+        }
+
+        public static object CautareBinara(int[] A,int k,int left,int right)
+        {
+            if (left > right)
+                return -1;
+            else
+            {
+                int mid = (left + right) / 2;
+                if (k == A[mid])
+                    return mid++;
+                else
+                {
+                    if (A[mid] == k)
+                        return mid;
+                    if (k < A[mid])
+                        return CautareBinara(A, k, left, mid - 1);
+                    else
+                        return CautareBinara(A, k, mid + 1, right);
+                }
+            }    
+        }
+        public static void   problema10()
+        {
+            Console.WriteLine("k,n,vector");
+            int k = int.Parse(Console.ReadLine());
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            Console.WriteLine( CautareBinara(A, k,0, n-1));
+        }
+        private static void problema9()
+        {
+            Console.WriteLine("k,n,vector");
+            int k = int.Parse(Console.ReadLine());
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            int j = 0;
+            int aux;
+            for (j = 0; j < k; j++)
+                for (int i = 0; i < n - 1; i++)
+                {
+                    aux = A[i];
+                    A[i] = A[i + 1];
+                    A[i + 1] = aux;
+                }
+
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+
+        private static void problema8()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            int aux;
+            for (int i = 0; i < n - 1; i++)
+            {
+                aux = A[i];
+                A[i] = A[i + 1];
+                A[i + 1] = aux;
+            }
+
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+
+        private static void problema7()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            int j = n - 1;
+            int aux;
+            for (int i = 0; i <= j; i++)
+            {
+                aux = A[i];
+                A[i] = A[j];
+                A[j] = aux;
+                j--;
+            }
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+
+        private static void problema6()
+        {
+            Console.WriteLine("n,k,vector");
+            int n = int.Parse(Console.ReadLine());
+            int k = int.Parse(Console.ReadLine());
+            int[] A = new int[n + 1];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            for (int i = k; i < n - 1; i++)
+                A[i] = A[i + 1];
+            n = n - 1;
+            for (int i = 0; i < n; i++)
+                Console.WriteLine($"{A[i] }");
+
+        }
+
+        private static void problema5()
+        {
+            Console.WriteLine("n,e,k,vector");
+            int n = int.Parse(Console.ReadLine());
+            int e = int.Parse(Console.ReadLine());
+            int k = int.Parse(Console.ReadLine());
+            int[] A = new int[n + 1];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            for (int i = n - 1; i > k - 1; i--)
+                A[i + 1] = A[i];
+            n = n + 1;
+            A[k] = e;
+            for (int i = 0; i < n; i++)
+                Console.WriteLine($"{A[i]} ");
         }
 
         private static void problema4()
         {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            int[] F = new int[100000];
+            for (int i = 0; i < F.Length; i++)
+                F[i] = 1;
+            int max;
+            int min;
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            min = max = A[0];
+            for (int i = 1; i < n; i++)
+            {
 
+                if (A[i] < min)
+                {
+                    min = A[i];
+                }
+                else if (A[i] == min)
+                    F[min]++;
+                else if (A[i] > max)
+                {
+                    max = A[i];
+                }
+                else if (A[i] == max)
+                    F[max]++;
+
+
+            }
+            Console.WriteLine($"minim {min} apare de {F[min]} ori");
+            Console.WriteLine($"max {max} apare de {F[max]} ori");
         }
 
         private static void problema3()
@@ -29,10 +205,10 @@ namespace pool3
             int max;
             int min;
             int count = 0;
-            for(int i=0;i<n;i++)
-                A[i]= int.Parse(Console.ReadLine());
-            min = max=A[0];
-            for (int i = 1; i < n ; i++)
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            min = max = A[0];
+            for (int i = 1; i < n; i++)
             {
                 if (A[i] < min)
                     min = A[i];
