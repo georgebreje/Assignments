@@ -21,28 +21,124 @@ namespace pool3
             //problema8();
             //problema9();
             //problema10();
-            problema11();
+            //problema11();
+            //problema12();
+            //problema13();
+            //problema14();
+            problema15();
+        }
+
+        private static void problema15()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            int nCopy = n;
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            for (int i = 0; i < n-2; i++)
+            {
+                for(int j=i+1;j<n-1;j++)
+                {
+                    while(A[i]==A[j])
+                    {
+                        A[i] = A[i + 1];
+                        A[j] = A[j + 1];
+                    }
+
+                }
+            }
+                for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+
+        private static void problema14()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            int aux = 0;
+            int j = n - 1;
+            for (int i = 0; i <= j; i++)
+            {
+                if (A[i] == 0)
+                {
+                    while (A[j] == 0)
+                    {
+                        j--;
+                    }
+                    aux = A[i];
+                    A[i] = A[j];
+                    A[j] = aux;
+                }
+                j--;
+            }
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+        private static void problema13()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++)
+                a[i] = int.Parse(Console.ReadLine());
+            for (int i = 1; i < n; i++)
+            {
+                int copy = a[i];
+                int j = i - 1;
+                while (j >= 0 && a[j] > copy)
+                {
+                    a[j + 1] = a[j];
+                    j--;
+                }
+                a[j + 1] = copy;
+            }
+            for (int i = 0; i < n; i++)
+                Console.WriteLine($"{a[i]} ");
+        }
+
+        private static void problema12()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++)
+                a[i] = int.Parse(Console.ReadLine());
+            for (int i = 0; i < n - 1; i++)
+            {
+                int min_idx = i;
+                for (int j = i + 1; j < n; j++)
+                    if (a[j] < a[min_idx])
+                        min_idx = j;
+                int aux = a[min_idx];
+                a[min_idx] = a[i];
+                a[i] = aux;
+            }
+            for (int i = 0; i < n; i++)
+                Console.WriteLine($"{a[i]} ");
         }
 
         private static void problema11()
         {
             int n = int.Parse(Console.ReadLine());
-            int[] a = new int [n];
+            int[] a = new int[n];
             for (int i = 0; i < n; i++)
                 a[i] = 0;
             a[0] = 1;
             a[1] = 1;
-            for(int i=2;i<Math.Sqrt(n);i++)
+            for (int i = 2; i < Math.Sqrt(n); i++)
             {
-                if(a[i]==0)
+                if (a[i] == 0)
                 {
                     for (int j = 2; j < n / i; j++)
                         a[i * j] = 1;
                 }
             }
+            for (int i = 0; i < n; i++)
+                if (a[i] == 0)
+                    Console.WriteLine(i + " ");
         }
 
-        public static object CautareBinara(int[] A,int k,int left,int right)
+        public static object CautareBinara(int[] A, int k, int left, int right)
         {
             if (left > right)
                 return -1;
@@ -60,9 +156,9 @@ namespace pool3
                     else
                         return CautareBinara(A, k, mid + 1, right);
                 }
-            }    
+            }
         }
-        public static void   problema10()
+        public static void problema10()
         {
             Console.WriteLine("k,n,vector");
             int k = int.Parse(Console.ReadLine());
@@ -70,7 +166,7 @@ namespace pool3
             int[] A = new int[n];
             for (int i = 0; i < n; i++)
                 A[i] = int.Parse(Console.ReadLine());
-            Console.WriteLine( CautareBinara(A, k,0, n-1));
+            Console.WriteLine(CautareBinara(A, k, 0, n - 1));
         }
         private static void problema9()
         {
