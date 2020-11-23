@@ -27,7 +27,7 @@ namespace pool2
             //problema12();
             //problema13();
             //problema14();
-            //problema15();
+            problema15();
             //problema16();
             //problema17();
         }
@@ -136,141 +136,94 @@ namespace pool2
         private static void problema15()
         {
             int n = int.Parse(Console.ReadLine());
-            int[] v = new int[n];
-            int ok = 1;
-            int ok1 = 0;
-            for (int i = 0; i < n; i++)
-            {
-                v[i] = int.Parse(Console.ReadLine());
-            }
-            int maxim = v[0], pozmax = 0; ;
-            for (int i = 1; i < n; i++)
-            {
-                if (v[i] > maxim)
-                {
-                    maxim = v[i];
-                    pozmax = i;
-                }
-            }
-            for (int i = 1; i < pozmax; i++)
-                if (v[i] >= v[i - 1])
-                    ok++;
-            if (ok != pozmax)
-                Console.WriteLine("Nu este bitonica");
-            else if (ok == pozmax)
-            {
-                for (int i = pozmax + 1; i < n - 1; i++)
-                    if (v[i] < v[i + 1])
-                        ok1++;
-                if (ok1 == 0)
-                    Console.WriteLine("Este bitonica");
-                else
-                    Console.WriteLine("Nu este bitonica");
-            }
-        }
-
-        private static void problema14()
-        {
-            int n = int.Parse(Console.ReadLine());
-            int[] v = new int[n];
-            int count = n - 1;
             int ok = 0;
             int ok1 = 0;
-            for (int i = 0; i < n; i++)
-            {
-                v[i] = int.Parse(Console.ReadLine());
-            }
-            for (int i = 0; i < n - 1; i++)
-            {
-                if (v[i] >= v[i + 1])
-                    ok1++;
-            }
-            if (ok1 == 0)
-                Console.WriteLine("este o secventa crescatoare");
-            else if (ok1 == n - 1)
-                Console.WriteLine("este o secventa descrescatoare");
-            else
-            {
-                for (int i = 0; i < n / 2; i++)
-                {
-                    int aux = v[i];
-                    v[i] = v[count];
-                    v[count] = aux;
-                    count--;
-                }
-                for (int i = 1; i < n - 1; i++)
-                {
-                    if (v[i] <= v[i + 1])
-                        ok = 0;
-                    else
-                        ok++;
-                }
-                if (ok == 0)
-                    Console.WriteLine("este o secventa crescatoare rotita.");
-                else if (ok == n - 1)
-                    Console.WriteLine("este o secventa descrescatoare rotita.");
-                else
-                    Console.WriteLine("nu este o secventa monotona rotita");
-            }
-        }
-
-        private static void problema13()
-        {
-            /* int n = int.Parse(Console.ReadLine());
-            int ok = 0;
-            int ok1 = 0;
-            int aux;
+            int oke = 0;
+            bool crescatoare = false, descrescatoare = false;
             int a = int.Parse(Console.ReadLine());
-            for (int i = 1; i < n; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 int b = int.Parse(Console.ReadLine());
-                aux = b;
-                b = a;
-                a = aux;
-            }
-            for (int i = 0; i < n-1; i++)
-            {
-                if (v[i] >= v[i + 1])
+                if (b >= a && descrescatoare==false)
+                {
+                    crescatoare = true;
+                    ok++;
+                }
+                else if (b <= a && crescatoare==true)
+                {
+                    descrescatoare = true;
                     ok1++;
+                }
+                a = b;
             }
-            if (ok1 == 0)
-                Console.WriteLine("este o secventa crescatoare");
+            if(ok1+ok==n-1)
+                Console.WriteLine("Bitonica");
             else
-            {
-                for (int i = 0; i < n / 2; i++)
-                {
-                    int aux = v[i];
-                    v[i] = v[count];
-                    v[count] = aux;
-                    count--;
-                }
-                for (int i = 1; i < n - 1; i++)
-                {
-                    if (v[i] <= v[i + 1])
-                        ok = 0;
-                    else
-                        ok++;
-                }
-                if (ok == 0)
-                    Console.WriteLine("este o secventa crescatoare rotita.");
-                else
-                    Console.WriteLine("nu este o secventa crescatoare rotita.");
+                Console.WriteLine("nu");
         }
-        int n = int.Parse(Console.ReadLine());
-            int[] A = new int[n];
-            for (int i = 0; i < n; i++)
-                A[i] = int.Parse(Console.ReadLine());
-            int aux;
-            for (int i = 0; i < n - 1; i++)
-            {
-                aux = A[i];
-                A[i] = A[i + 1];
-                A[i + 1] = aux;
-            }
 
-            for (int i = 0; i < n; i++)
-                Console.Write($"{A[i]} "); */
+    private static void problema14()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int a = int.Parse(Console.ReadLine());
+        int minim, maxim;
+        minim = maxim = a;
+        bool crescatoare = true, descrescatoare = true;
+        int cadereCresc = 0, cadereDescresc = 0, cadere = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            int b = int.Parse(Console.ReadLine());
+            if (a > b)
+            {
+                crescatoare = false;
+            }
+            else if (a < b)
+            {
+                descrescatoare = false;
+            }
+            if (a > b && minim > b)
+            {
+                cadereCresc++;
+            }
+            if (a < b && maxim < b)
+            {
+                cadereDescresc++;
+            }
+            a = b;
         }
+        if (crescatoare == true || cadereCresc == 1)
+            Console.WriteLine("Monoton crescatoare rotita");
+        else if (descrescatoare == true || cadereDescresc == 1)
+            Console.WriteLine("Monoton descrescatoare rotita");
+        else
+            Console.WriteLine("Nu este monotona");
+    }
+
+    private static void problema13()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int a = int.Parse(Console.ReadLine());
+        int minim = a;
+        bool crescatoare = true;
+        int cadere = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            int b = int.Parse(Console.ReadLine());
+            if (a > b)
+            {
+                crescatoare = false;
+            }
+            if (a > b && minim > b)
+            {
+                cadere++;
+            }
+            a = b;
+        }
+        if (crescatoare == true || cadere == 1)
+            Console.WriteLine("Este rotita crescatoare");
+        else
+            Console.WriteLine("Nu este rotita crescatoare");
+    }
 
     private static void problema12()
     {

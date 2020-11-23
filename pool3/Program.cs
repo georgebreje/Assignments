@@ -32,22 +32,38 @@ namespace pool3
         {
             int n = int.Parse(Console.ReadLine());
             int[] A = new int[n];
+            bool ok = true;
             int nCopy = n;
+            int poz = 0;
             for (int i = 0; i < n; i++)
                 A[i] = int.Parse(Console.ReadLine());
-            for (int i = 0; i < n-2; i++)
+            for (int i = 0; i < n - 1; i++)
             {
-                for(int j=i+1;j<n-1;j++)
+                ok = true;
+                for (int j = i + 1; j < n; j++)
                 {
-                    while(A[i]==A[j])
+                    if (A[i] == A[j])
                     {
-                        A[i] = A[i + 1];
-                        A[j] = A[j + 1];
+                        A[j] = 0;
+                        ok = false;
                     }
-
+                }
+                if (ok == false)
+                    A[i] = 0;
+            }
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+            Console.WriteLine();
+            for (int i = n-1; i >=0; i--)
+            {
+                if (A[i] == 0)
+                {
+                    for (int j = i; j < n - 1; j++)
+                        A[i] = A[i + 1];
+                    n--;
                 }
             }
-                for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
                 Console.Write($"{A[i]} ");
         }
 
