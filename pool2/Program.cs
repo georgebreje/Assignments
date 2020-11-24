@@ -27,8 +27,8 @@ namespace pool2
             //problema12();
             //problema13();
             //problema14();
-            problema15();
-            //problema16();
+            //problema15();
+            problema16();
             //problema17();
         }
 
@@ -65,72 +65,57 @@ namespace pool2
         private static void problema16()
         {
             int n = int.Parse(Console.ReadLine());
-            int[] v = new int[n];
-            int ok = 1;
-            int ok2 = 1;
-            int ok1 = 0;
-            int ok3 = 0;
-            int count = n - 1;
-            for (int i = 0; i < n; i++)
+            int a = int.Parse(Console.ReadLine());
+            int comparatorDesc = a;
+            int comparatorCresc=a;
+            bool crescatoare = false;
+            bool descrescatoare = false,bitonica=false;
+            int oktest = 0;
+            for(int i=0;i<n-1;i++)
             {
-                v[i] = int.Parse(Console.ReadLine());
-            }
-            int maxim = v[0], pozmax = 0; ;
-            for (int i = 1; i < n; i++)
-            {
-                if (v[i] > maxim)
+                int b = int.Parse(Console.ReadLine());
+                if (b <= a && crescatoare == false)
                 {
-                    maxim = v[i];
-                    pozmax = i;
+                    descrescatoare = true;
+                    oktest++;
                 }
-            }
-            for (int i = 1; i < pozmax; i++)
-                if (v[i] >= v[i - 1])
-                    ok++;
-            if (ok != pozmax)
-                Console.WriteLine("Nu este bitonica");
-            else if (ok == pozmax)
-            {
-                for (int i = pozmax + 1; i < n - 1; i++)
-                    if (v[i] < v[i + 1])
-                        ok1++;
-                if (ok1 == 0)
-                    Console.WriteLine("Este bitonica");
-                else
+                else if(b>=comparatorCresc && crescatoare==false && descrescatoare==false)
                 {
-                    for (int i = 0; i < n / 2; i++)
+                    crescatoare = true;
+                    descrescatoare = true;
+                }
+                else if (b >= a && crescatoare == false)
+                {
+                    crescatoare = true;
+                    oktest++;
+                }
+                else if (b <= a && crescatoare == true)
+                {
+                    descrescatoare = true;
+                    oktest++;
+                }
+                else if(b<=a && descrescatoare==true)
+                {
+                    crescatoare = true;
+                    oktest++;
+                }
+                else if(b>=a && descrescatoare==true && crescatoare==true)
+                {
+                    if(b>=comparatorDesc || b>=comparatorCresc)
                     {
-                        int aux = v[i];
-                        v[i] = v[count];
-                        v[count] = aux;
-                        count--;
+                        bitonica = true;
                     }
-                    int maxim2 = v[0], pozmax2 = 0; ;
-                    for (int i = 1; i < n; i++)
-                    {
-                        if (v[i] > maxim)
-                        {
-                            maxim2 = v[i];
-                            pozmax2 = i;
-                        }
-                    }
-                    for (int i = 1; i < pozmax2; i++)
-                        if (v[i] >= v[i - 1])
-                            ok2++;
-                    if (ok2 != pozmax2)
-                        Console.WriteLine("Nu este bitonica rotita");
-                    else if (ok2 == pozmax2)
-                    {
-                        for (int i = pozmax2 + 1; i < n - 1; i++)
-                            if (v[i] < v[i + 1])
-                                ok3++;
-                    }
-                    if (ok3 == 0)
-                        Console.WriteLine("este bitonica rotita");
                     else
-                        Console.WriteLine("nu este bitonica rotita");
+                    {
+                        bitonica = false;
+                    }
                 }
+                a = b;
             }
+            if (bitonica == true)
+                Console.WriteLine("Este bitonica rotita");
+            else
+                Console.WriteLine("Nu este bitonica rotita");
         }
 
         private static void problema15()
