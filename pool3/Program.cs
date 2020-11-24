@@ -25,7 +25,91 @@ namespace pool3
             //problema12();
             //problema13();
             //problema14();
-            problema15();
+            //problema15();
+            //problema16();
+            //problema17();
+            //problema18();
+            problema19();
+        }
+
+        private static void problema19()
+        {
+        }
+
+        private static void problema18()
+        {
+            Console.WriteLine("Introduceti gradul polinomului");
+            int n = int.Parse(Console.ReadLine());
+            int nCopy = n;
+            Console.WriteLine("Introduceti punctul x");
+            int x = int.Parse(Console.ReadLine());
+            Console.WriteLine("Coeficientii (n+1 coeficienti)");
+            int[] coef = new int[n+1];
+            int suma = 0;
+            for(int i=0;i<n+1;i++)
+                coef[i]=int.Parse(Console.ReadLine());
+            for (int i = 0; i < n + 1; i++)
+            {
+                suma += coef[i] * (int)(Math.Pow(x,nCopy));
+                if (i < n)
+                {
+                    Console.Write($"{coef[i]}*{x}^{nCopy} + ");
+                }
+                else
+                {
+                    Console.Write($"{coef[i]}*{x}^{nCopy} =");
+                }
+                nCopy--;
+            }
+            Console.Write(suma);
+        }
+
+        private static void problema17()
+        {
+            Console.WriteLine("Numarul in baza 10");
+            int n = int.Parse(Console.ReadLine());
+            Console.WriteLine("Baza");
+            int b = int.Parse(Console.ReadLine());
+            int rest;
+            int[] v = new int[n];
+            int i = 0;
+            while (n != 0)
+            {
+                rest = n % b;
+                n = n / b;
+                v[i] = rest;
+                i++;
+            }
+            for (int j = i - 1; j >= 0; j--)
+            {
+                if (v[j] < 10)
+                    Console.Write(v[j]);
+                else if(v[j]>=10)
+                    Console.Write((char)(v[j] + (int)'A'-10));
+            }
+        }
+
+        private static void problema16()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int cmmdc = 0;
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            cmmdc = A[0];
+            for (int i = 1; i < n; i++)
+            {
+                int copie = A[i];
+                while (copie != cmmdc)
+                {
+                    if (copie > cmmdc)
+                        copie -= cmmdc;
+                    else if (copie < cmmdc)
+                        cmmdc -= copie;
+                }
+
+            }
+            Console.WriteLine(cmmdc);
         }
 
         private static void problema15()
@@ -51,18 +135,20 @@ namespace pool3
                 if (ok == false)
                     A[i] = 0;
             }
-            for (int i = 0; i < n; i++)
-                Console.Write($"{A[i]} ");
-            Console.WriteLine();
-            for (int i = n-1; i >=0; i--)
+            //Console.WriteLine("Vectorul modificat cu 0 in loc de cifrele care se repeta");
+            //for (int i = 0; i < n; i++)
+            //    Console.Write($"{A[i]} ");
+            //Console.WriteLine();
+            for (int i = n - 1; i >= 0; i--)
             {
                 if (A[i] == 0)
                 {
                     for (int j = i; j < n - 1; j++)
-                        A[i] = A[i + 1];
+                        A[j] = A[j + 1];
                     n--;
                 }
             }
+            Console.WriteLine("Noul vector");
             for (int i = 0; i < n; i++)
                 Console.Write($"{A[i]} ");
         }

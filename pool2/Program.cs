@@ -28,7 +28,7 @@ namespace pool2
             //problema13();
             //problema14();
             //problema15();
-            problema16();
+            //problema16();
             //problema17();
         }
 
@@ -70,14 +70,12 @@ namespace pool2
             int comparatorCresc=a;
             bool crescatoare = false;
             bool descrescatoare = false,bitonica=false;
-            int oktest = 0;
             for(int i=0;i<n-1;i++)
             {
                 int b = int.Parse(Console.ReadLine());
                 if (b <= a && crescatoare == false)
                 {
                     descrescatoare = true;
-                    oktest++;
                 }
                 else if(b>=comparatorCresc && crescatoare==false && descrescatoare==false)
                 {
@@ -87,17 +85,14 @@ namespace pool2
                 else if (b >= a && crescatoare == false)
                 {
                     crescatoare = true;
-                    oktest++;
                 }
                 else if (b <= a && crescatoare == true)
                 {
                     descrescatoare = true;
-                    oktest++;
                 }
                 else if(b<=a && descrescatoare==true)
                 {
                     crescatoare = true;
-                    oktest++;
                 }
                 else if(b>=a && descrescatoare==true && crescatoare==true)
                 {
