@@ -29,11 +29,12 @@ namespace pool3
             //problema16();
             //problema17();
             //problema18();
-            problema19();
+            //problema19();
         }
 
         private static void problema19()
         {
+
         }
 
         private static void problema18()
@@ -114,6 +115,29 @@ namespace pool3
 
         private static void problema15()
         {
+            //varianta 2
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+                A[i] = int.Parse(Console.ReadLine());
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (A[i] == A[j])
+                    {
+                        for(int k=j;k<n-1;k++)
+                        {
+                            A[k] = A[k + 1];
+                        }
+                        n--;
+                        j--;
+                    }
+                }
+            }
+            for(int i=0;i<n;i++)
+                Console.Write($"{A[i]} ");
+            /* varianta in care niciun element care se repeta nu mai apare
             int n = int.Parse(Console.ReadLine());
             int[] A = new int[n];
             bool ok = true;
@@ -150,7 +174,7 @@ namespace pool3
             }
             Console.WriteLine("Noul vector");
             for (int i = 0; i < n; i++)
-                Console.Write($"{A[i]} ");
+                Console.Write($"{A[i]} ");*/
         }
 
         private static void problema14()
