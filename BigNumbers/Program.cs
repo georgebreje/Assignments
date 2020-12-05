@@ -9,67 +9,42 @@ namespace BigNumbers
 {
     class Program
     {
-        public struct BigInteger : 
-
-        static void ReadOperation()
-        {
-            ConsoleKeyInfo input = Console.ReadKey();
-            switch (input.KeyChar)
-            {
-                case '1':
-                    Addition();
-                    break;
-                case '2':
-                    Substraction();
-                    break;
-                case '3':
-                    Multiplication();
-                    break;
-                case '4':
-                    Division();
-                    break;
-                case '5':
-                    Exponentiation();
-                    break;
-                case '6':
-                    SquareRoot();
-                    break;
-                default:
-                    Console.WriteLine("Choose a number from 1 to 6");
-                    break;
-
-
-            }
-        }
-
         private static void Addition()
         {
             
         }
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Select operation by pressing its designated key");
-            Console.WriteLine("1 -> addition");
-            Console.WriteLine("2 -> substraction");
-            Console.WriteLine("3 -> multiplication");
-            Console.WriteLine("4 -> division");
-            Console.WriteLine("5 -> exponentiation");
-            Console.WriteLine("6 -> square root");
-            ReadOperation();
-            Console.WriteLine("Enter numbers on the same line with space separator");
+            Console.WriteLine("Enter equation (use s character for square root)");
             ReadNumbers();
         }
-
         private static void ReadNumbers()
         {
-            BigInteger number = 
             string line = Console.ReadLine();
-            string[] split = line.Split(' ');
+            string[] split = line.Split('+', '-', '*', '/', '^', 's');
+            string substituteSplit = "";
+            int[] vector = new int[] { };
             for(int i=0;i<split.Length;i++)
             {
-
+                substituteSplit = split[i];
+                vector=SplittedTransform(substituteSplit);
+                for (int j = 0; j < vector.Length; j++)
+                {
+                    Console.Write($"vector[{j}]= "+vector[j]+" ");
+                }
             }
+        }
+        
+        static int[] SplittedTransform(string stringArr)
+        {
+            int[] constant = new int[stringArr.Length];
+            int i = 0;
+            foreach(char digit in stringArr)
+            {
+                    constant[i] = (int)digit-(int)'0';
+                    i++;
+            }
+            return constant;
         }
     }
 }
