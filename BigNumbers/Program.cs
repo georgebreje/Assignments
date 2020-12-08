@@ -53,9 +53,9 @@ namespace BigNumbers
                     throw new Exception("Incorrect input");
             }
         }
-        private static void Addition(int[] a,int[] b)
+        private static void Addition(int[] a, int[] b)
         {
-            int maxLength=0;
+            int maxLength = 0;
             if (a.Length > b.Length)
                 maxLength = a.Length;
             else
@@ -64,42 +64,76 @@ namespace BigNumbers
             int[] sum = new int[n];
             int j = b.Length - 1;
             int i = a.Length - 1;
-            int k = a.Length;
-            while (i >= 0 && j >= 0)
+            int k = n - 1;
+            while (i > 0 && j > 0)
             {
                 sum[k] += (a[i] + b[j]) % 10;
                 if ((a[i] + b[j]) / 10 != 0)
                 {
                     sum[k - 1]++;
                 }
-                else if ((a[i] + b[j]) / 10 != 0 && k == 1)
-                {
-                    n--;
-                }
 
                 i--;
                 j--;
                 k--;
             }
-            if(i!=0)
+            if (i >= 0)
             {
                 while (i >= 0)
                 {
-                    sum[k] += a[i];
+                    if (j == 0)
+                    {
+                        sum[k] += (a[i] + b[j]) % 10;
+                        
+                        if ((a[i] + b[j]) / 10 != 0)
+                        {
+                            sum[k - 1]++;
+                        }
+                        j--;
+                    }
+                    else
+                    {
+                        if ((sum[k] + a[i]) / 10 != 0)
+                        {
+                            if (k > 0)
+                            {
+                                sum[k] = 0;
+                            }
+
+                            sum[k - 1]++;
+                        }
+                    }
                     i--;
                     k--;
                 }
             }
-            if (j != 0)
+            if (j >= 0)
             {
                 while (j >= 0)
                 {
-                    sum[k] += b[j];
+                    if (j == 0)
+                    {
+                        sum[k] = (b[j] + a[i]) % 10;
+                        
+                        if ((b[j] + a[i]) / 10 != 0)
+                        {
+                            sum[k - 1]++;
+                        }
+                        i--;
+                    }
+                    else
+                    {
+                        sum[k] = (sum[k] + b[j]) % 10;
+                        if ((sum[k] + b[j]) / 10 != 0)
+                        {
+                            sum[k - 1]++;
+                        }
+                    }
                     j--;
                     k--;
                 }
             }
-            for (int l = 1; l < n; l++)
+            for (int l = 0; l < n; l++)
                 Console.Write(sum[l]);
         }
 
