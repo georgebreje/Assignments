@@ -13,7 +13,7 @@ namespace BigNumbers
         static void Main(string[] args)
         {
             Console.WriteLine("The program calculates + - * / ^ sqrt of two numbers");
-            Console.WriteLine("Insert numbers and operation");
+            Console.WriteLine("Insert numbers and operation (for sqrt use s character)");
             ReadNumbers();
         }
 
@@ -32,7 +32,7 @@ namespace BigNumbers
             switch (operation)
             {
                 case '+':
-                    Addition(number1Arr,number2Arr);
+                    Addition(number1Arr, number2Arr);
                     break;
                 default:
                     break;
@@ -55,7 +55,52 @@ namespace BigNumbers
         }
         private static void Addition(int[] a,int[] b)
         {
-            Console.WriteLine("am ajuns la adunare");
+            int maxLength=0;
+            if (a.Length > b.Length)
+                maxLength = a.Length;
+            else
+                maxLength = b.Length;
+            int n = maxLength + 1;
+            int[] sum = new int[n];
+            int j = b.Length - 1;
+            int i = a.Length - 1;
+            int k = a.Length;
+            while (i >= 0 && j >= 0)
+            {
+                sum[k] += (a[i] + b[j]) % 10;
+                if ((a[i] + b[j]) / 10 != 0)
+                {
+                    sum[k - 1]++;
+                }
+                else if ((a[i] + b[j]) / 10 != 0 && k == 1)
+                {
+                    n--;
+                }
+
+                i--;
+                j--;
+                k--;
+            }
+            if(i!=0)
+            {
+                while (i >= 0)
+                {
+                    sum[k] += a[i];
+                    i--;
+                    k--;
+                }
+            }
+            if (j != 0)
+            {
+                while (j >= 0)
+                {
+                    sum[k] += b[j];
+                    j--;
+                    k--;
+                }
+            }
+            for (int l = 1; l < n; l++)
+                Console.Write(sum[l]);
         }
 
         //convert to int each digit

@@ -32,10 +32,10 @@ namespace pool3
             //problema19();
             //problema20();
             //problema21();
-            //problema22();
+            problema22();
             //problema23();
             //problema24();
-            problema25();
+            //problema25();
         }
 
         private static void problema25()
@@ -99,6 +99,30 @@ namespace pool3
 
         private static void problema22()
         {
+            int n = 10;
+            int[] v1 = new int[] { 1, 2, 4, 5, 5, 3, 5, 6, 1,13,1 };
+            int m = 10;
+            int[] v2 = new int[] {8,5,1,8,9,10,11,13,7,10 };
+            int[] v3 = new int[n + m];
+            int k = 0;
+            for(int i=0;i<n;i++)
+            {
+                bool gasit = false;
+                int x = v1[i];
+                for(int j=0;j<m;j++)
+                {
+                    if (x == v2[j])
+                        gasit = true;
+                }
+                if(gasit==true)
+                {
+                    v3[k] = v1[i];
+                    k++;
+                }    
+            }
+            
+                Afisare(v3, k);
+            /*rezolvare cu frecvente
             int[] frecv = new int[100000];
             int[] frecv1 = new int[100000];
             int[] frecv2 = new int[100000];
@@ -193,7 +217,7 @@ namespace pool3
                 }
             }
             Console.WriteLine("\nDiferenta v2-v1");
-            Afisare(v6, ps2);
+            Afisare(v6, ps2);*/
         }
 
 
