@@ -12,7 +12,7 @@ namespace BigNumbers
 
         static void Main(string[] args)
         {
-            Console.WriteLine("The program calculates + - * / ^ sqrt of two numbers");
+            Console.WriteLine("The program calculates + - * / ^ sqrt of two natural numbers");
             Console.WriteLine("Insert numbers and operation (for sqrt use s character)");
             ReadNumbers();
         }
@@ -34,12 +34,16 @@ namespace BigNumbers
                 case '+':
                     Addition(number1Arr, number2Arr);
                     break;
+                case '-':
+                    Substraction(number1Arr,number2Arr);
+                    break;
                 default:
                     break;
 
             }
 
         }
+
         static void CheckExceptionsOperation(char operation)
         {
             if (operation != '-' && operation != '+' && operation != '*' && operation != '/' && operation != 's')
@@ -53,6 +57,31 @@ namespace BigNumbers
                     throw new Exception("Incorrect input");
             }
         }
+        private static void Substraction(int[] a, int[] b)
+        {
+            if(IsBigger(a,b)==true)
+            {
+
+            }
+        }
+
+        private static bool IsBigger(int[] a, int[] b)
+        {
+            int aInt=0, bInt = 0;
+            for(int i=0;i< a.Length ; i++)
+            {
+                aInt = aInt*10 + a[i] ;
+            }
+            for (int i = 0; i < b.Length; i++)
+            {
+                bInt = bInt * 10 + b[i];
+            }
+            if (aInt >= bInt)
+                return true;
+            else
+                return false;
+        }
+
         private static void Addition(int[] a, int[] b)
         {
             int minLength, maxLength;
