@@ -35,7 +35,7 @@ namespace BigNumbers
                     Addition(number1Arr, number2Arr);
                     break;
                 case '-':
-                    Substraction(number1Arr,number2Arr);
+                    Substraction(number1Arr, number2Arr);
                     break;
                 default:
                     break;
@@ -57,20 +57,86 @@ namespace BigNumbers
                     throw new Exception("Incorrect input");
             }
         }
+
         private static void Substraction(int[] a, int[] b)
         {
-            if(IsBigger(a,b)==true)
+            int maxLength = 0;
+            if(a.Length>b.Length)
             {
-
+                maxLength = a.Length;
+            }
+            else
+            {
+                maxLength = b.Length;
+            }
+            int[] dif = new int[maxLength];
+            bool bigger = true;
+            if (IsBigger(a, b) == true)
+            {
+                bigger = true;
+                Array.Reverse(a);
+                Array.Reverse(b);
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (a[i] >= b[i])
+                    {
+                        dif[i] = a[i] - b[i];
+                    }
+                    else
+                    {
+                        dif[i] = (a[i] + 10) - b[i];
+                        a[i + 1]--;
+                    }
+                }
+                for(int i=b.Length;i<a.Length;i++)
+                {
+                    dif[i] = a[i];
+                }
+            }
+            else
+            {
+                bigger = false;
+                Array.Reverse(a);
+                Array.Reverse(b);
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (b[i] >= a[i])
+                    {
+                        dif[i] = b[i] - a[i];
+                    }
+                    else
+                    {
+                        dif[i] = (b[i] + 10) - a[i];
+                        b[i + 1]--;
+                    }
+                }
+                for(int i=a.Length;i<b.Length;i++)
+                {
+                    dif[i] = b[i];
+                }
+            }
+            Array.Reverse(dif);
+            int j = 0;
+            while(dif[j]==0)
+            {
+                j++;
+            }
+            if(bigger==false)
+            {
+                Console.Write("-");
+            }    
+            for (int k = j; k < maxLength; k++)
+            {
+                Console.Write(dif[k]);
             }
         }
 
         private static bool IsBigger(int[] a, int[] b)
         {
-            int aInt=0, bInt = 0;
-            for(int i=0;i< a.Length ; i++)
+            int aInt = 0, bInt = 0;
+            for (int i = 0; i < a.Length; i++)
             {
-                aInt = aInt*10 + a[i] ;
+                aInt = aInt * 10 + a[i];
             }
             for (int i = 0; i < b.Length; i++)
             {
@@ -98,7 +164,7 @@ namespace BigNumbers
             Array.Reverse(a);
             Array.Reverse(b);
             int[] sum = new int[maxLength];
-            for(int i= 0;i<minLength;i++)
+            for (int i = 0; i < minLength; i++)
             {
                 if (sum[i] + a[i] + b[i] >= 10)
                 {
@@ -110,9 +176,9 @@ namespace BigNumbers
                     sum[i] = (sum[i] + a[i] + b[i]) % 10;
                 }
             }
-            if(a.Length!=b.Length)
+            if (a.Length != b.Length)
             {
-                for (int i = minLength; i < maxLength-1; i++)
+                for (int i = minLength; i < maxLength - 1; i++)
                 {
                     if (a.Length > b.Length)
                     {
