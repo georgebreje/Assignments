@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 
 namespace BigNumbers
 {
@@ -37,6 +32,16 @@ namespace BigNumbers
                 case '-':
                     Substraction(number1Arr, number2Arr);
                     break;
+                case '*':
+                    if (IsBigger(number1Arr, number2Arr) == true) // daca nr1 mai mare egal nr2 atunci apelam de nr1, nr2 altfel
+                    {                                             // apelam de nr2, nr1. este nevoie de numarul mai mic prestabilit
+                        Multiplication(number1Arr, number2Arr);
+                    }
+                    else
+                    {
+                        Multiplication(number2Arr, number1Arr);
+                    }
+                    break;
                 default:
                     break;
 
@@ -57,11 +62,75 @@ namespace BigNumbers
                     throw new Exception("Incorrect input");
             }
         }
+        private static void Multiplication(int[] a, int[] b)
+        {
+            // a este numarul mai mare egal, b mai mic
+            int multipliedArraysCounter = 0;  // evidenta numarului de vectori care se vor forma din inmultirea cifra cu cifra
+            int index = 0;
+            for (index = 0; index < b.Length; index++) ;
+            multipliedArraysCounter = index;
+
+            Array.Reverse(a);
+            Array.Reverse(b);
+
+            int[] sumArr = new int[2*a.Length];  // vector pt insumarea vectorului produs
+
+            int multipliedArrLength = a.Length+1;
+            int zeroValuePositionCount = 0;
+            int k = 0; // counter pt pozitiile vectorului cu produsul
+            int saver = 0;
+            for (int j=0;j<b.Length;j++)
+            {
+                int[] multipliedArr = new int[multipliedArrLength];
+
+                zeroValuePositionCount = multipliedArrLength - a.Length - 1;
+                k = zeroValuePositionCount ;
+                int zeroIndex = 0;
+                while(zeroValuePositionCount>0)
+                {
+                    multipliedArr[zeroIndex] = 0;
+                    zeroValuePositionCount--;
+                }
+
+                for (int i = 0; i < a.Length; i++)
+                {
+                    
+                    if (a[i] * b[j] >= 10)
+                    {
+                        saver = multipliedArr[k];
+                        multipliedArr[k] = (multipliedArr[k] + a[i] * b[j]) % 10;
+                        multipliedArr[k + 1] = (saver + a[i] * b[j]) / 10 ;
+                    }
+                    else
+                    {
+                        multipliedArr[k] = (multipliedArr[i] + a[i] * b[j]) % 10;
+                    }
+                }
+                for (int l = 0; l < multipliedArrLength; l++)
+                {
+                    if (sumArr[l] + multipliedArr[l] >= 10)
+                    {
+                        sumArr[l] = (sumArr[l] + multipliedArr[l]) % 10;
+                        sumArr[l + 1]++;
+                    }
+                    else
+                    {
+                        sumArr[l] = (sumArr[l] + multipliedArr[l]) % 10;
+                    }
+                }
+                multipliedArrLength++;
+            }
+            Array.Reverse(sumArr);
+            for (int l = 0; l < sumArr.Length; l++)
+            {
+                Console.Write($"{sumArr[l]}");
+            }
+        }
 
         private static void Substraction(int[] a, int[] b)
         {
             int maxLength = 0;
-            if(a.Length>b.Length)
+            if (a.Length > b.Length)
             {
                 maxLength = a.Length;
             }
@@ -88,7 +157,7 @@ namespace BigNumbers
                         a[i + 1]--;
                     }
                 }
-                for(int i=b.Length;i<a.Length;i++)
+                for (int i = b.Length; i < a.Length; i++)
                 {
                     dif[i] = a[i];
                 }
@@ -110,21 +179,21 @@ namespace BigNumbers
                         b[i + 1]--;
                     }
                 }
-                for(int i=a.Length;i<b.Length;i++)
+                for (int i = a.Length; i < b.Length; i++)
                 {
                     dif[i] = b[i];
                 }
             }
             Array.Reverse(dif);
             int j = 0;
-            while(dif[j]==0)
+            while (dif[j] == 0)
             {
                 j++;
             }
-            if(bigger==false)
+            if (bigger == false)
             {
                 Console.Write("-");
-            }    
+            }
             for (int k = j; k < maxLength; k++)
             {
                 Console.Write(dif[k]);
