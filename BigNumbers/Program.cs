@@ -64,67 +64,53 @@ namespace BigNumbers
         }
         private static void Multiplication(int[] a, int[] b)
         {
-            // a este numarul mai mare egal, b mai mic
-            int multipliedArraysCounter = 0;  // evidenta numarului de vectori care se vor forma din inmultirea cifra cu cifra
-            int index = 0;
-            for (index = 0; index < b.Length; index++) ;
-            multipliedArraysCounter = index;
-
+            int zeroValuePositionCount = 0, multipliedArrLength = a.Length+1;
+            int[] sumArr = new int[2*a.Length+1];
             Array.Reverse(a);
             Array.Reverse(b);
-
-            int[] sumArr = new int[2*a.Length];  // vector pt insumarea vectorului produs
-
-            int multipliedArrLength = a.Length+1;
-            int zeroValuePositionCount = 0;
-            int k = 0; // counter pt pozitiile vectorului cu produsul
-            int saver = 0;
-            for (int j=0;j<b.Length;j++)
+            for (int i = 0; i < b.Length; i++)
             {
                 int[] multipliedArr = new int[multipliedArrLength];
-
                 zeroValuePositionCount = multipliedArrLength - a.Length - 1;
-                k = zeroValuePositionCount ;
+                int k = zeroValuePositionCount;
                 int zeroIndex = 0;
-                while(zeroValuePositionCount>0)
+                while (zeroValuePositionCount > 0)
                 {
                     multipliedArr[zeroIndex] = 0;
                     zeroValuePositionCount--;
                 }
 
-                for (int i = 0; i < a.Length; i++)
+                for (int l = 0; l < a.Length; l++)
                 {
-                    
-                    if (a[i] * b[j] >= 10)
+                    if((multipliedArr[k] + a[l] * b[i]) >= 10)
                     {
-                        saver = multipliedArr[k];
-                        multipliedArr[k] = (multipliedArr[k] + a[i] * b[j]) % 10;
-                        multipliedArr[k + 1] = (saver + a[i] * b[j]) / 10 ;
+                        multipliedArr[k + 1] = (multipliedArr[k] + a[l] * b[i]) / 10;
+                        multipliedArr[k] = (multipliedArr[k] + a[l] * b[i]) % 10;
+                        k++;
                     }
                     else
                     {
-                        multipliedArr[k] = (multipliedArr[i] + a[i] * b[j]) % 10;
+                        multipliedArr[k] = (multipliedArr[k] + a[l] * b[i]) % 10;
+                        k++;
                     }
                 }
-                for (int l = 0; l < multipliedArrLength; l++)
+                for(int idx=0;idx<multipliedArrLength;idx++)
                 {
-                    if (sumArr[l] + multipliedArr[l] >= 10)
+                    if((sumArr[idx]+multipliedArr[idx])>=10)
                     {
-                        sumArr[l] = (sumArr[l] + multipliedArr[l]) % 10;
-                        sumArr[l + 1]++;
+                        sumArr[idx] = (sumArr[idx] + multipliedArr[idx]) % 10;
+                        sumArr[idx + 1]++;
                     }
                     else
                     {
-                        sumArr[l] = (sumArr[l] + multipliedArr[l]) % 10;
+                        sumArr[idx] = (sumArr[idx] + multipliedArr[idx]) % 10;
                     }
                 }
                 multipliedArrLength++;
             }
             Array.Reverse(sumArr);
-            for (int l = 0; l < sumArr.Length; l++)
-            {
-                Console.Write($"{sumArr[l]}");
-            }
+            for (int i = 0; i < sumArr.Length; i++)
+                Console.Write(sumArr[i] + " ");
         }
 
         private static void Substraction(int[] a, int[] b)
