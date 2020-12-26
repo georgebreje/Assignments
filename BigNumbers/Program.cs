@@ -33,8 +33,8 @@ namespace BigNumbers
                     Substraction(number1Arr, number2Arr);
                     break;
                 case '*':
-                    if (IsBigger(number1Arr, number2Arr) == true) // daca nr1 mai mare egal nr2 atunci apelam de nr1, nr2 altfel
-                    {                                             // apelam de nr2, nr1. este nevoie de numarul mai mic prestabilit
+                    if (IsBigger(number1Arr, number2Arr) == true) // este nevoie de numarul mai mic prestabilit
+                    {                                             
                         Multiplication(number1Arr, number2Arr);
                     }
                     else
@@ -42,10 +42,16 @@ namespace BigNumbers
                         Multiplication(number2Arr, number1Arr);
                     }
                     break;
+                case '/':
+                    Division(number1Arr, number2Arr);
+                    break;
                 default:
                     break;
-
             }
+        }
+
+        private static void Division(int[] number1Arr, int[] number2Arr)
+        {
 
         }
 
@@ -65,7 +71,7 @@ namespace BigNumbers
         private static void Multiplication(int[] a, int[] b)
         {
             int zeroValuePositionCount = 0, multipliedArrLength = a.Length+1;
-            int[] sumArr = new int[2*a.Length+1];
+            int[] sumArr = new int[3*a.Length+1];
             Array.Reverse(a);
             Array.Reverse(b);
             for (int i = 0; i < b.Length; i++)
@@ -109,8 +115,13 @@ namespace BigNumbers
                 multipliedArrLength++;
             }
             Array.Reverse(sumArr);
-            for (int i = 0; i < sumArr.Length; i++)
-                Console.Write(sumArr[i] + " ");
+            int i2 = 0;
+            while (sumArr[i2] == 0)
+            {
+                i2++;
+            }
+            for (int i = i2; i < sumArr.Length; i++)
+                Console.Write(sumArr[i]);
         }
 
         private static void Substraction(int[] a, int[] b)
