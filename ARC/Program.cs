@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+
 namespace ARC
 {
     class Program
@@ -12,11 +13,12 @@ namespace ARC
         static void Main(string[] args)
         {
             string line;
-            StreamReader file = new StreamReader(@"data.in");
-            while ((line = file.ReadLine()) != null)
+            StreamReader sr = new StreamReader(@"data.in");
+            while ((line = sr.ReadLine()) != null)
             {
-                
+                Decrypt.ProgramDelimitation(line);
             }
         }
+
     }
 }

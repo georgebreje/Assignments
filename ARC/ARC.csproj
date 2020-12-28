@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B23BDD14-6A83-44B1-8839-E28892D53C03}</ProjectGuid>
+    <ProjectGuid>{5D40650A-F490-4E6F-ACB6-D7C7112C2032}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ARC</RootNamespace>
     <AssemblyName>ARC</AssemblyName>
@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Decrypt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
