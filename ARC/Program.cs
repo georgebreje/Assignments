@@ -16,7 +16,7 @@ namespace ARC
             StreamReader sr = new StreamReader(@"data.in");
             while ((line = sr.ReadLine()) != null)
             {
-                Decrypt.ProgramDelimitation(line);
+                Decrypt.ProgramComs(line);
             }
         }
 

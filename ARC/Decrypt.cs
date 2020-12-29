@@ -9,44 +9,40 @@ namespace ARC
 {
     public class Decrypt
     {
-        public static void ProgramDelimitation(string line)   
+        public static void ProgramComs(string line)
         {
-            /*Regex rgxProgramDelimitation = new Regex(@"\B([.])");
-            Regex rgxProgramBegin = new Regex(@"\b(?<word>)");
-            //Regex rgxProgramEnd = new Regex(@"\b(?<end>)");
-            //Regex rgxProgramOrg = new Regex(@"\b(?<org>)");
+            string patBegin = @"\.begin?";
+            string patOrg = @"\.org 2048?";
+            string patEnd = @"\.end?";
+            //string patErr = @"\w+\B([.,/;'[]\=-1234567890<>:";
+            Regex rB = new Regex(patBegin);
+            Regex rO = new Regex(patOrg);
+            Regex rE = new Regex(patEnd);
+            //Regex rErr = new Regex(patErr);
 
-            MatchCollection matchesDot = rgxProgramDelimitation.Matches(line);
-            MatchCollection matchesBegin = rgxProgramBegin.Matches(line);
-          //MatchCollection matchesEnd = rgxProgramEnd.Matches(line);
-          //MatchCollection matchesOrg = rgxProgramOrg.Matches(line);
 
-            if(rgxProgramDelimitation.IsMatch(line))
+            Match matchBegin = rB.Match(line);
+            Match matchOrg = rO.Match(line);
+            Match matchEnd = rE.Match(line);
+            //Match matchErr = rErr.Match(line);
+
+            //if(matchErr.Success && (matchErr.Value!=matchBegin.Value))
+            //{
+            //    Console.WriteLine(matchErr.Value);
+            //}
+            if (matchBegin.Success)
             {
+                Console.WriteLine("begin");
             }
-            */
-            string patBegin = @"\B([.])begin";
-            Regex r = new Regex(patBegin);
-            Match m = r.Match(line);
-            int matchCount = 0;
-            while (m.Success)
+            if (matchOrg.Success)
             {
-                Console.WriteLine("Match" + (++matchCount));
-                for (int i = 1; i <= 2; i++)
-                {
-                    Group g = m.Groups[i];
-                    Console.WriteLine("Group" + i + "='" + g + "'");
-                    CaptureCollection cc = g.Captures;
-                    for (int j = 0; j < cc.Count; j++)
-                    {
-                        Capture c = cc[j];
-                        System.Console.WriteLine("Capture" + j + "='" + c + "', Position=" + c.Index);
-                    }
-                }
-                m = m.NextMatch();
+                Console.WriteLine("org 2048");
+            }
+            if (matchEnd.Success)
+            {
+                Console.WriteLine("end");
             }
         }
     }
-    //Console.WriteLine("{0} matches found in:\n {1}",matches.Count,line);
 
 }
