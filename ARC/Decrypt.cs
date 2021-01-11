@@ -14,33 +14,43 @@ namespace ARC
             string patBegin = @"\.begin?";
             string patOrg = @"\.org 2048?";
             string patEnd = @"\.end?";
-            //string patErr = @"\w+\B([.,/;'[]\=-1234567890<>:";
             Regex rB = new Regex(patBegin);
             Regex rO = new Regex(patOrg);
             Regex rE = new Regex(patEnd);
-            //Regex rErr = new Regex(patErr);
 
 
             Match matchBegin = rB.Match(line);
             Match matchOrg = rO.Match(line);
             Match matchEnd = rE.Match(line);
-            //Match matchErr = rErr.Match(line);
 
-            //if(matchErr.Success && (matchErr.Value!=matchBegin.Value))
-            //{
-            //    Console.WriteLine(matchErr.Value);
-            //}
-            if (matchBegin.Success)
+            char[] errCheck = new char[line.Length];
+            int i = 0;
+            foreach(char s in line)
             {
-                Console.WriteLine("begin");
+                if (s != ' ')
+                    errCheck[i] = s;
+
+                i++;
             }
-            if (matchOrg.Success)
+            string checking = new string(errCheck);
+            if (checking != ".begin" && checking != ".org 2048" && checking != ".end")
             {
-                Console.WriteLine("org 2048");
+                Console.WriteLine("Syntax error");
             }
-            if (matchEnd.Success)
+            else
             {
-                Console.WriteLine("end");
+                if (matchBegin.Success)
+                {
+                    Console.WriteLine(matchBegin.Value);
+                }
+                else if (matchOrg.Success)
+                {
+                    Console.WriteLine(matchOrg.Value);
+                }
+                else if (matchEnd.Success)
+                {
+                    Console.WriteLine(matchEnd.Value);
+                }
             }
         }
     }

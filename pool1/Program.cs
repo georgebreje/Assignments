@@ -13,7 +13,7 @@ namespace pool1
     {
         static void Main(string[] args)
         {
-            Problema1();
+            /*Problema1();
             Problema2();
             Problema3();
             Problema4();
@@ -32,7 +32,7 @@ namespace pool1
             Problema17();
             Problema18();
             Problema19();
-            Problema20();
+            Problema20();*/
             Problema21();
 
         }
@@ -41,23 +41,29 @@ namespace pool1
         private static void Problema21()
         {
             int x = rnd.Next(1024);
-            int minx = 0, maxix = 1024;
-            Console.WriteLine("Raspundeti cu da sau nu. Daca s-a gasit numarul scrieti stop");
-            Console.WriteLine($"Numarul este mai mare sau egal decat {x}?");
-            string check = Console.ReadLine();
-            while (check == "da" || check =="nu")
+            Console.WriteLine($"Hint: x este {x}");
+            int check = -1;
+            int minx=0, maxix = 1024;
+
+            while(check!=x)
             {
-                Console.WriteLine($"Numarul este mai mare sau egal decat {x}?");
-                check = Console.ReadLine();
-                if (check == "da")
+                Console.WriteLine($"Numarul este mai mare sau egal decat ");
+                check = int.Parse(Console.ReadLine());
+                Console.WriteLine("?");
+                Console.WriteLine();
+                if (check > x)
                 {
-                    minx = x;
-                    x = rnd.Next(minx, maxix);
+                    minx = check;
+                    Console.WriteLine("Nu");
                 }
-                else
+                else if (check < x)
                 {
-                    maxix = x;
-                    x = rnd.Next(minx, maxix);
+                    maxix = check;
+                    Console.WriteLine("Da");
+                }
+                else if (check == x)
+                {
+                    Console.WriteLine("Gasit");
                 }
             }
         }
