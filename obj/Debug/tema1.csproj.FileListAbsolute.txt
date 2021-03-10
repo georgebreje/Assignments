@@ -1,0 +1,7 @@
+C:\Users\George\source\repos\LabL\tema1\bin\Debug\tema1.exe.config
+C:\Users\George\source\repos\LabL\tema1\bin\Debug\tema1.exe
+C:\Users\George\source\repos\LabL\tema1\bin\Debug\tema1.pdb
+C:\Users\George\source\repos\LabL\tema1\obj\Debug\tema1.csprojAssemblyReference.cache
+C:\Users\George\source\repos\LabL\tema1\obj\Debug\tema1.csproj.CoreCompileInputs.cache
+C:\Users\George\source\repos\LabL\tema1\obj\Debug\tema1.exe
+C:\Users\George\source\repos\LabL\tema1\obj\Debug\tema1.pdb
